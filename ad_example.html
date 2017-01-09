@@ -1,0 +1,212 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<!-- For help on using this template, see the blog post: http://mechanicalturk.typepad.com/blog/2014/04/editing-the-survey-link-project-template-in-the-ui.html --><!-- Bootstrap v3.0.3 -->
+<link href="https://s3.amazonaws.com/mturk-public/bs30/css/bootstrap.min.css" rel="stylesheet" />
+
+<script>
+function turkGetParam( name ) {
+    name = name.replace(/[[]/,"\[").replace(/[]]/,"\]");
+    var regexS = "[?&]"+name+"=([^&#]*)";
+    var regex = new RegExp( regexS );
+    var results = regex.exec( window.location.href );
+    if( results == null )
+        return "";
+    else
+        return results[1];
+}
+
+$( document ).ready(function() { 
+    var assignmentId = turkGetParam('assignmentId', '');
+    var workerId = turkGetParam('workerId', '');
+
+    // TODO: Replace this with your survey link
+    var link = 'http://YOUR-LINK-HERE.com';
+
+    if (assignmentId != '' && assignmentId != 'ASSIGNMENT_ID_NOT_AVAILABLE') {
+        var workerId = turkGetParam('workerId', '');
+
+        $("#afterAccept").show();
+        $("#beforeAccept").hide();
+        $("#submitButton").show();
+
+        if(workerId != '' && workerId != undefined) {
+            link += '?workerId=' + workerId;
+            link += '&a1=${SCOTUSAudioID1}&a2=${SCOTUSAudioID2}'; 
+        }
+    }
+    else {
+        link += '?workerId=temp'
+        $("#afterAccept").hide();
+        $("#beforeAccept").show();
+        $("#submitButton").hide();
+    }
+    $('#expt-link').attr('href', link);
+
+    $('#submitButton').appendTo($('div#submit-button-container'));
+});
+</script>
+
+<div id="beforeAccept">
+    <div style="margin: 20px auto; width: 800px;">
+        <div style="margin: 20px auto; width: 800px;">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h1 class="panel-title" style="text-align: center; font-size: 150%">Sentence Processing Study</h1>
+                </div>
+                <div class="panel-body" style="text-align: center;">Phonology Laboratory, Department of Linguistics, University of Chicago</div>
+            </div>
+        </div>
+
+        <div class="panel panel-danger">
+            <div class="panel-heading" style="text-align: center;">
+                <strong>Please do not complete more than one HIT in this batch. You will not be paid for multiple submissions in this batch.</strong>
+            </div>
+        </div>
+        
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h1 class="panel-title">Overview</h1>
+            </div> 
+            
+            <div class="panel-body">
+                <p>* Experiment Overview Here *</p>
+            </div>
+        </div>
+        
+        <div class="panel panel-info" id="audio">
+            <div class="panel-heading">
+                <h3 class="panel-title">System Requirements</h3>
+            </div>
+
+            <div class="panel-body">
+                <h4>Web Browser</h4>
+
+                <p>* Browser Requirements Here *</p>
+
+                <p>Please ensure that your internet connection will be stable throughout the HIT. Because this HIT requires you to load a large number of audio files, as well as to record and upload your voice via a web module, it runs best on a fast internet conenction. If your current actual download speed is at least 1 Mbps (to test your current connection speed in a new tab: <a href="http://www.speedtest.net">http://www.speedtest.net/</a>), your connection should be fast enough.</p>
+            </div>
+        </div>
+
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <h1 class="panel-title">Time Limit</h1>
+            </div>
+
+            <div class="panel-body">
+                <p><b>This study must be completed in a single sitting</b>. It will take about <b>* Time Limit Here *</b> to complete the study at a normal and comfortable pace; the absolute time limit is <b>* Time Limit Here *</b>.</p>
+            </div>
+        </div>
+
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <h1 class="panel-title">Participant Requirements</h1>
+            </div>
+
+            <div class="panel-body">
+                <p>* Participant Requirements Here *</p>
+            </div> 
+        </div>
+
+        <div class="panel-footer">
+            <p style="text-align:center;"><b>Note:</b> If no survey link appears after you accept this HIT, your browser is not loading the HIT correctly.<br/>Should this occur, <b>do not click</b> Submit; try refreshing the page or loading the HIT in a different browser.<br/>In the event that the HIT still does not work, please contact the requester.</p>
+        </div>
+    </div>
+</div>
+
+<div id="afterAccept" style="display: none;">
+    <div style="margin: 20px auto; width: 800px;">
+        <div style="margin: 20px auto; width: 800px;">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h1 class="panel-title" style="text-align: center; font-size: 150%">Sentence Processing Study</h1>
+                </div>
+                <div class="panel-body" style="text-align: center;">Phonology Laboratory, Department of Linguistics, University of Chicago</div>
+            </div>
+        </div>
+
+        <div class="panel panel-danger">
+            <div class="panel-heading" style="text-align: center;">
+                <strong>Please do not complete more than one HIT in this batch. You will not be paid for multiple submissions in this batch.</strong>
+            </div>
+        </div>
+        
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h1 class="panel-title">Overview</h1>
+            </div> 
+            
+            <div class="panel-body">
+                <p>* Experiment Overview Here *</p>
+            </div>
+        </div>
+        
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">System Requirements</h3>
+            </div>
+
+            <div class="panel-body">
+                <h4>Web Browser</h4>
+
+                <p>* Browser Requirements Here *</p>
+
+                <p>Please ensure that your internet connection will be stable throughout the HIT. Because this HIT requires you to load a large number of audio files, as well as to record and upload your voice via a web module, it runs best on a fast internet conenction. If your current actual download speed is at least 1 Mbps (to test your current connection speed in a new tab: <a href="http://www.speedtest.net">http://www.speedtest.net/</a>), your connection should be fast enough.</p>
+            </div>
+        </div>
+
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <h1 class="panel-title">Time Limit</h1>
+            </div>
+
+            <div class="panel-body">
+                <p><b>This study must be completed in a single sitting</b>. It will take about <b>* Time Limit Here *</b> to complete the study at a normal and comfortable pace; the absolute time limit is <b>* Time Limit Here *</b>.</p>
+            </div>
+        </div>
+
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <h1 class="panel-title">Participant Requirements</h1>
+            </div>
+
+            <div class="panel-body">
+                <p>* Participant Requirements Here *</p>
+            </div> 
+        </div>
+
+        <div class="panel panel-primary">
+            <div class="panel-heading"><strong>Instructions</strong></div>
+            <div class="panel-body">
+                <p>Please click the link below to complete the survey. At the end of the survey, you will receive an identifier code to paste into the box below to receive credit for participating in our experiment.</p>
+
+                <p><strong>Make sure to leave this window open as you complete the experiment. </strong> When you are finished, you will return to this page to paste the code into the box.</p>
+            
+                <!-- End Instruction -->
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><strong>Experiment link:</strong></td>
+                            <td><a id="expt-link" href="" target="blank">Experiment</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Provide the identifier code here:</strong></td>
+                            <td style="vertical-align: middle;"><input class="form-control" id="surveycode" name="surveycode" placeholder="e.g. 123456" type="text" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="panel-footer">
+            <div id="submit-button-container" class="panel-body text-center"></div>
+        </div>
+    </div>
+</div>
+
+
+<!-- close container section -->
+<style type="text/css">td {
+    font-size:1.0em;
+    padding:5px 5px;
+}
+</style>
