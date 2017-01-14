@@ -1,0 +1,4 @@
+%%table = -1; // TODO: ID of table to be randomized
+%%reftable = -1; // TODO: ID of table that's being copied
+
+sgapiSetTableOrderByTable(%%table,%%reftable); // Set order of $table based on $reftable
