@@ -30,151 +30,261 @@ The following changes can be made with minimal changes to the code
 
 -->
 
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="https://cdn.rawgit.com/components/handlebars.js/master/handlebars.js" type="text/javascript" charset="utf-8"></script>
+<html>
+    <head>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://cdn.rawgit.com/components/handlebars.js/master/handlebars.js" type="text/javascript" charset="utf-8"></script>
 
-<script src='https://www.gstatic.com/firebasejs/3.0.2/firebase.js'></script>
-<script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-database.js"></script>
-<script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-storage.js"></script>
+        <script src='https://www.gstatic.com/firebasejs/3.0.2/firebase.js'></script>
+        <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-database.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-storage.js"></script>
 
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script><script src="https://cdn.rawgit.com/coolaj86/knuth-shuffle/master/index.js"></script>
-<script src="static/js/main.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script><script src="https://cdn.rawgit.com/coolaj86/knuth-shuffle/master/index.js"></script>
+        <script src="static/js/lib/underscore-min.js"></script>
+        <script src="static/js/utils.js"></script>
+        <script src="static/js/main.js"></script>
 
-<style type="text/css">
-.hidden {
-    display: none;
-}
-table {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 14px;
-    line-height: 1.428571429;
-    color: #333333;
-}
-</style>
+        <style type="text/css">
+            .centered {
+                text-align: center;
+            }
+            
+            .hidden {
+                display: none;
+            }
+            
+            table {
+                font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+                font-size: 14px;
+                line-height: 1.428571429;
+                color: #333333;
+            }
+        </style>
 
-<!-- Generate HTML for each rating with Handlebars -->
-<script id="generate-html" type="text/x-handlebars-template">
-    <div class="item panel panel-info" id="recording{{num}}">
+        <!-- Generate HTML for each rating with Handlebars -->
+        <script id="generate-html" type="text/x-handlebars-template">
+            <div class="item panel panel-info" id="recording{{num}}">
 
-        <div class="panel-heading">Recording {{num}} of {{total}}</div>
+                <div class="panel-heading">Recording {{num}} of {{total}}</div>
 
-        <div class="panel-body">
-            // Change <source src="..."></source> here to the correct directory
-            <p  align="center"><audio controls="controls" id="ScotusAudioID{{num}}" preload="auto"><source src="http://projects.rcc.uchicago.edu/aclyu/oyez/{{audio_name}}" type="audio/wav" /></audio></p>
-            <p><br/>1. Please provide your impression of the voice recording in the matrix below:</p>
-            <table align="center">
-                <tbody>
-                {{#each rating}}
-                <tr>
-                    <td style="width: 130px; height: 25px;">{{qualfier1}}</td>
-                    <td style="height: 25px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name="Scotus{{quality}}{{num}}" type="radio" value="{{rate1}}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name="Scotus{{quality}}{{num}}" type="radio" value="{{rate2}}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name="Scotus{{quality}}{{num}}" type="radio" value="{{rate3}}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input name="Scotus{{quality}}{{num}}" type="radio" value="{{rate4}}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input name="Scotus{{quality}}{{num}}" type="radio" value="{{rate5}}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input name="Scotus{{quality}}{{num}}" type="radio" value="{{rate6}}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input name="Scotus{{quality}}{{num}}" type="radio" value="{{rate7}}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                    <td>{{qualfier2}}</td>
-                </tr>
-                {{/each}}
-                </tbody>
-            </table>
-            <p><br/>2. Assuming that this is a lawyer arguing a case in front of a panel of judges, how likely do you think this lawyer will win the case?</p>
-            <table align="center">
-                <tbody>
-                    <tr>
-                        <td>Will Definitely Lose</td>
-                        <td>&nbsp;&nbsp;<input name="ScotusWin{{num}}"  type="radio" value="1" />--<input name="ScotusWin{{num}}"  type="radio" value="2" />--<input name="ScotusWin{{num}}"  type="radio" value="3" />--<input name="ScotusWin{{num}}"  type="radio" value="4" />--<input name="ScotusWin{{num}}"  type="radio" value="5" />--<input name="ScotusWin{{num}}"  type="radio" value="6" />--<input name="ScotusWin{{num}}"  type="radio" value="7" />&nbsp;&nbsp;</td>
-                        <td>Will Definitely Win</td>
-                    </tr>
-                </tbody>
-            </table>
-            <p><br/>3. How good is the quality of the recording?</p>
-            <table align="center">
-                <tbody>
-                    <tr>
-                        <td>Very Bad</td>
-                        <td>&nbsp;&nbsp;<input name="ScotusQuality{{num}}"  type="radio" value="1" />--<input name="ScotusQuality{{num}}"  type="radio" value="2" />--<input name="ScotusQuality{{num}}"  type="radio" value="3" />--<input name="ScotusQuality{{num}}"  type="radio" value="4" />--<input name="ScotusQuality{{num}}"  type="radio" value="5" />--<input name="ScotusQuality{{num}}"  type="radio" value="6" />--<input name="ScotusQuality{{num}}"  type="radio" value="7" />&nbsp;&nbsp;</td>
-                        <td>Very Good</td>
-                    </tr>
-                </tbody>
-            </table>
+                <div class="panel-body">
+                    <p  align="center"><audio controls="controls" id="ScotusAudioID{{num}}" preload="auto"><source src="http://projects.rcc.uchicago.edu/aclyu/oyez/{{audio_name}}" type="audio/wav" /></audio></p>
+                    <p><br/>1. Please provide your impression of the voice recording in the matrix below:</p>
+                    <table align="center">
+                        <tbody>
+                        {{#each rating}}
+                        <tr>
+                            <td style="width: 130px; height: 25px;">{{qualfier1}}</td>
+                            <td style="height: 25px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name="Scotus{{quality}}{{num}}" type="radio" value="{{rate1}}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name="Scotus{{quality}}{{num}}" type="radio" value="{{rate2}}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name="Scotus{{quality}}{{num}}" type="radio" value="{{rate3}}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input name="Scotus{{quality}}{{num}}" type="radio" value="{{rate4}}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input name="Scotus{{quality}}{{num}}" type="radio" value="{{rate5}}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input name="Scotus{{quality}}{{num}}" type="radio" value="{{rate6}}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input name="Scotus{{quality}}{{num}}" type="radio" value="{{rate7}}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td>{{qualfier2}}</td>
+                        </tr>
+                        {{/each}}
+                        </tbody>
+                    </table>
+                    <p><br/>2. Assuming that this is a lawyer arguing a case in front of a panel of judges, how likely do you think this lawyer will win the case?</p>
+                    <table align="center">
+                        <tbody>
+                            <tr>
+                                <td>Will Definitely Lose</td>
+                                <td>&nbsp;&nbsp;<input name="ScotusWin{{num}}"  type="radio" value="1" />--<input name="ScotusWin{{num}}"  type="radio" value="2" />--<input name="ScotusWin{{num}}"  type="radio" value="3" />--<input name="ScotusWin{{num}}"  type="radio" value="4" />--<input name="ScotusWin{{num}}"  type="radio" value="5" />--<input name="ScotusWin{{num}}"  type="radio" value="6" />--<input name="ScotusWin{{num}}"  type="radio" value="7" />&nbsp;&nbsp;</td>
+                                <td>Will Definitely Win</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p><br/>3. How good is the quality of the recording?</p>
+                    <table align="center">
+                        <tbody>
+                            <tr>
+                                <td>Very Bad</td>
+                                <td>&nbsp;&nbsp;<input name="ScotusQuality{{num}}"  type="radio" value="1" />--<input name="ScotusQuality{{num}}"  type="radio" value="2" />--<input name="ScotusQuality{{num}}"  type="radio" value="3" />--<input name="ScotusQuality{{num}}"  type="radio" value="4" />--<input name="ScotusQuality{{num}}"  type="radio" value="5" />--<input name="ScotusQuality{{num}}"  type="radio" value="6" />--<input name="ScotusQuality{{num}}"  type="radio" value="7" />&nbsp;&nbsp;</td>
+                                <td>Very Good</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="panel-footer" style="text-align: center;"><button class="btn btn-success btn-next-tweet" name="{{num}}">Next</button></div>
+            </div>
+        </script>
+        <title>Speech Rating Study</title>
+    </head>
+    <body>
+        <div class="panel panel-body centered" id="header">
+                <img class="logo" src="https://communications.uchicago.edu/sites/all/files/identity/logo/jpg/UC-Shield-fall-2012.jpg" alt="UChicago Logo" width="100"/>
+            
+                <h4 class="header">Phonology Laboratory, Department of Linguistics, The University of Chicago</h4>
         </div>
 
-        <div class="panel-footer" style="text-align: center;"><button class="btn btn-disabled btn-next-tweet" disabled="disabled" name="{{num}}">Next</button></div>
-    </div>
-</script>
-
-<div style="margin: 20px auto; width: 800px;">
-    <div class="carousel slide" data-interval="false" data-ride="carousel" data-wrap="false" id="tweets-carousel">
-        <div class="carousel-inner">
-            <div class="item active" data-timeout-length="10000" id="profile">
-                <div class="panel panel-primary" data-timeout-length="10000" id="profile">
-                    <div class="panel-heading">
-                        <div class="panel-title">Profile</div>
-                    </div>
-
-                    <div class="panel-body">
-                        <p>Please answer the following questions:</p>
-
-                        <table class="table">
-                            <tbody>
-                                <tr>
-                                    <th style="text-align: right;">Year of birth:</th>
-                                    <td><select id="ProfileYear" name="ProfileYear"><option value="">Please select an option.</option><option>1996</option><option>1995</option><option>1994</option><option>1993</option><option>1992</option><option>1991</option><option>1990</option><option>1989</option><option>1988</option><option>1987</option><option>1986</option><option>1985</option><option>1984</option><option>1983</option><option>1982</option><option>1981</option><option>1980</option><option>1979</option><option>1978</option><option>1977</option><option>1976</option><option>1975</option><option>1974</option><option>1973</option><option>1972</option><option>1971</option><option>1970</option><option>1969</option><option>1968</option><option>1967</option><option>1966</option><option>1965</option><option>1964</option><option>1963</option><option>1962</option><option>1961</option><option>1960</option><option>1959</option><option>1958</option><option>1957</option><option>1956</option><option>1955</option><option>1954</option><option>1953</option><option>1952</option><option>1951</option><option>1950</option><option>1949</option><option>1948</option><option>1947</option><option>1946</option><option>1945</option><option>1944</option><option>1943</option><option>1942</option><option>1941</option><option>1940</option><option>1939</option><option>1938</option><option>1937</option><option>1936</option><option>1935</option><option>1934</option><option>1933</option><option>1932</option><option>1931</option><option>1930</option><option>1929</option><option>1928</option><option>1927</option><option>1926</option><option>1925</option><option>1924</option><option>1923</option><option>1922</option><option>1921</option><option>1920</option><option>1919</option><option>1918</option><option>1917</option><option>1916</option><option>1915</option><option>1914</option><option value="N/A"></option> </select></td>
-                                </tr>
-                                <tr>
-                                    <th style="text-align: right;">Gender:</th>
-                                    <td><select id="ProfileGender" name="ProfileGender"><option value="">Please select an option.</option><option>Male</option><option>Female</option><option value="N/A"></option> </select></td>
-                                </tr>
-                                <tr>
-                                    <th style="text-align: right;">State of residence:</th>
-                                    <td><select id="ProfileState" name="ProfileState"><option value="">Please select an option.</option><option>Alabama</option><option>Alaska</option><option>Arizona</option><option>Arkansas</option><option>California</option><option>Colorado</option><option>Connecticut</option><option>Delaware</option><option>District of Columbia</option><option>Florida</option><option>Georgia</option><option>Hawaii</option><option>Idaho</option><option>Illinois</option><option>Indiana</option><option>Iowa</option><option>Kansas</option><option>Kentucky</option><option>Louisiana</option><option>Maine</option><option>Maryland</option><option>Massachusetts</option><option>Michigan</option><option>Minnesota</option><option>Mississippi</option><option>Missouri</option><option>Montana</option><option>Nebraska</option><option>Nevada</option><option>New Hampshire</option><option>New Jersey</option><option>New Mexico</option><option>New York</option><option>North Carolina</option><option>North Dakota</option><option>Ohio</option><option>Oklahoma</option><option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option><option>South Carolina</option><option>South Dakota</option><option>Tennessee</option><option>Texas</option><option>Utah</option><option>Vermont</option><option>Virginia</option><option>Washington</option><option>West Virginia</option><option>Wisconsin</option><option>Wyoming</option> </select></td>
-                                </tr>
-                                <tr>
-                                    <th style="text-align: right;">Highest educational attainment:</th>
-                                    <td><select id="ProfileEducation" name="ProfileEducation"><option value="">Please select an option.</option><option>Doctoral degree</option><option>Professional degree</option><option>Master&#39;s degree</option><option>Bachelor&#39;s degree</option><option>Associate&#39;s degree</option><option>Some college</option><option>Graduated high school</option><option>Some high school</option><option>No high school-level education</option> </select></td>
-                                </tr>
-                                <tr>
-                                    <th style="text-align: right;">Race:</th>
-                                    <td><select id="ProfileRace" name="ProfileRace"><option value="">Please select an option.</option><option>African American</option><option>American Indian or Native American</option><option>Asian</option><option>Hispanic or Latino/Latina</option><option>Native Hawaiian or Pacific Islander</option><option>White</option><option value="N/A"></option> </select></td>
-                                </tr>
-                                <tr>
-                                    <th style="text-align: right;">Total annual household income:</th>
-                                    <td><select id="ProfileIncome" name="ProfileIncome"><option value="">Please select an option.</option><option>Less than $20,000</option><option>Between $20,000 to $40,000</option><option>Between $40,001 to $60,000</option><option>Between $60,001 to $80,000</option><option>More than $80,000</option><option value="N/A"></option> </select></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="panel-footer" style="text-align: center;"><button class="btn btn-disabled btn-next-profile" disabled="disabled">Next</button></div>
-                </div>
+        <div id="no-consent" style="display:none">
+            <div class="panel panel-body centered">
+                Thanks for your interest! We're sorry this study wasn't for you. You may close this window and return the HIT.
             </div>
-            <div class="item">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Instructions</h3>
-                    </div>
+        </div>
 
-                    <div class="panel-body">
-                        <ul>
-                            <li>In the following task, you will listen to a series of audio recordings from different talkers. Please follow the instructions and provide your impression of the talkers.</li>
-                            <li>There are altogether 66 questions. Please expect to spend roughly 25 minutes for all of them (approx. 20 seconds per question).</li>
-                            <li>For each question, the associated audio clip will be automatically played once when the question appears, and you may play it as many times as you like.</li>
-                            <li>Please respond as quickly as possible. Please report your first impression and do not dwell on a particular file for too long.</li>
-                            <li>Click on &quot;Next&quot; to begin the task.</li>
-                        </ul>
-                    </div>
-
-                    <div class="panel-footer" style="text-align: center;"><button class="btn btn-success btn-next-instruction">Next</button></div>
-                </div>
+        <div id="browser">
+            <div class="panel panel-body centered">
+                Thank you for your interest in our study! <br/><br/> As a reminder, this study runs best in <b>Chrome</b> or <b>Firefox</b>. If you are not using one of these browers, we recommend switching now to avoid future issues. When you are ready, please proceed via the button below.
+                <br/><br/>
+                <button type="button" class="btn btn-success browser">
+                    Continue
+                </button>
             </div>
+        </div>
 
-            <!-- Below will be the HTML generated by Handlebars for the each rating-->
+        <div id="consent" style="display:none">
+            <div class="panel panel-body">
+                <h3>We Need Your Consent to Proceed</h3>
+                
+                <hr />
+
+                <h4>Introduction</h4>
+                
+                <p>The Department of Linguistics of the University of Chicago is carrying out a research study to find out the speech habits of English speakers. The researcher is Dr. Alan Yu (Professor of Linguistics).</p>
+
+                <p>You are invited to take part in a research study. Before you decide to be a part of this study, you need to understand the risks and benefits. This consent form provides information about the research study. This process is known as informed consent. Your decision to take part in the study is voluntary. You are free to choose whether or not you will take part in the study.</p>
+
+                <br/>
+
+                <h4>Information About Participants' Involvement in the Study</h4>
+
+                <p>The research will be conducted over the online platform Amazon Mechanical Turk in an hour-long session. Within the session, you will be asked to participate in series of speech and language processing tasks and to fill out a set of questionnaires. You can terminate the experiment at any time. Withdrawing from the study will not result in any negative consequences for you.</p>
+
+                <br/>
+
+                <h4>Risks</h4>
+
+                <p>Your participation poses minimal risks to you. Your answers will be kept confidential and your responses will not be linked to you personally; they will be reported as a group.</p>
+
+                <br/>
+
+                <h4>Benefits</h4>
+
+                <p>There is no immediate benefit to you. A better understanding of the speech perception and production may help identify potential obstacles in first/second language acquisition, which in turn may help improving language teaching pedagogy.</p>
+
+                <br/>
+
+                <h4>Confidentiality</h4>
+
+                <p>The information in the study records will be kept confidential. Data will be stored securely and will be made available only to persons conducting the study unless participants specifically give permission in writing to do otherwise. No reference will be made in oral or written reports which could link participants to the study.</p>
+
+                <br/>
+
+                <h4>Compensation</h4>
+
+                <p>You will receive $3 for your participation in this study.</p>
+
+                <br/>
+
+                <h4> Contact Information</h4>
+
+                <p>If you have questions at any time about the study, the procedures, or your rights as a participant, you may contact the researcher at 1115 E. 58th Street, Chicago, IL 60637 or contact the lab team at <a href="mailto:phonlab@gmail.com">phonlab@gmail.com</a>. If you have questions regarding your rights as a participant, you may contact the Institutional Review Board at 773-834-7835 or sbsirbwise@listhost.uchicago.edu.</p>
+
+                <br/>
+
+                <h4>Participation</h4>
+                
+                <p>Your participation in this study is voluntary; you may decline to participate without penalty. If you decide to participate, you may withdraw from the study at any time without penalty and without loss of benefits to which you are otherwise entitled. If you withdraw from the study before data collection is completed your data will be returned to you or destroyed.</p>
+
+                <button type="button" class="btn btn-default btn-sm" onClick="window.print();">
+                <span class="glyphicon glyphicon-print"></span>Print a copy of this</button>
+            </div>
+            <div class="panel panel-body centered">
+        
+                <p><b>By participating in this experiment I confirm that I am at least 18 years old and I understand the purpose of the research, the study procedures that I will undergo, and the possible risks and discomforts as well as benefits that I may experience. I have read and I understand these terms of consent. Therefore, I agree to give my consent to participate as a subject in this research project.</b></p>
+
+                <br/>
+                    <button type="button" class="btn btn-success consent">
+                        <span class="glyphicon glyphicon-ok"></span>
+                        Yes, I would like to proceed with this study.
+                    </button>
+
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                    <button type="button" class="btn btn-danger no-consent">
+                        <span class="glyphicon glyphicon-ban-circle"></span>
+                        No thanks, I do not want to do this study.
+                    </button>
+            </div>
+        </div>
+
+        <div id="main" style="margin: 20px auto; width: 800px; display: none;">
+            <div class="carousel" data-interval="false" data-ride="carousel" data-wrap="false" id="tweets-carousel">
+                <div class="carousel-inner">
+                    <div class="item active" data-timeout-length="10000" id="profile">
+                        <div class="panel panel-primary" data-timeout-length="10000" id="profile">
+                            <div class="panel-heading">
+                                <div class="panel-title">Profile</div>
+                            </div>
+
+                            <div class="panel-body">
+                                <p>Please answer the following questions:</p>
+
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <th style="text-align: right;">Year of birth:</th>
+                                            <td><select id="ProfileYear" name="ProfileYear"><option value="">Please select an option.</option><option>1996</option><option>1995</option><option>1994</option><option>1993</option><option>1992</option><option>1991</option><option>1990</option><option>1989</option><option>1988</option><option>1987</option><option>1986</option><option>1985</option><option>1984</option><option>1983</option><option>1982</option><option>1981</option><option>1980</option><option>1979</option><option>1978</option><option>1977</option><option>1976</option><option>1975</option><option>1974</option><option>1973</option><option>1972</option><option>1971</option><option>1970</option><option>1969</option><option>1968</option><option>1967</option><option>1966</option><option>1965</option><option>1964</option><option>1963</option><option>1962</option><option>1961</option><option>1960</option><option>1959</option><option>1958</option><option>1957</option><option>1956</option><option>1955</option><option>1954</option><option>1953</option><option>1952</option><option>1951</option><option>1950</option><option>1949</option><option>1948</option><option>1947</option><option>1946</option><option>1945</option><option>1944</option><option>1943</option><option>1942</option><option>1941</option><option>1940</option><option>1939</option><option>1938</option><option>1937</option><option>1936</option><option>1935</option><option>1934</option><option>1933</option><option>1932</option><option>1931</option><option>1930</option><option>1929</option><option>1928</option><option>1927</option><option>1926</option><option>1925</option><option>1924</option><option>1923</option><option>1922</option><option>1921</option><option>1920</option><option>1919</option><option>1918</option><option>1917</option><option>1916</option><option>1915</option><option>1914</option><option value="N/A"></option> </select></td>
+                                        </tr>
+                                        <tr>
+                                            <th style="text-align: right;">Gender:</th>
+                                            <td><select id="ProfileGender" name="ProfileGender"><option value="">Please select an option.</option><option>Male</option><option>Female</option><option value="N/A"></option> </select></td>
+                                        </tr>
+                                        <tr>
+                                            <th style="text-align: right;">State of residence:</th>
+                                            <td><select id="ProfileState" name="ProfileState"><option value="">Please select an option.</option><option>Alabama</option><option>Alaska</option><option>Arizona</option><option>Arkansas</option><option>California</option><option>Colorado</option><option>Connecticut</option><option>Delaware</option><option>District of Columbia</option><option>Florida</option><option>Georgia</option><option>Hawaii</option><option>Idaho</option><option>Illinois</option><option>Indiana</option><option>Iowa</option><option>Kansas</option><option>Kentucky</option><option>Louisiana</option><option>Maine</option><option>Maryland</option><option>Massachusetts</option><option>Michigan</option><option>Minnesota</option><option>Mississippi</option><option>Missouri</option><option>Montana</option><option>Nebraska</option><option>Nevada</option><option>New Hampshire</option><option>New Jersey</option><option>New Mexico</option><option>New York</option><option>North Carolina</option><option>North Dakota</option><option>Ohio</option><option>Oklahoma</option><option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option><option>South Carolina</option><option>South Dakota</option><option>Tennessee</option><option>Texas</option><option>Utah</option><option>Vermont</option><option>Virginia</option><option>Washington</option><option>West Virginia</option><option>Wisconsin</option><option>Wyoming</option> </select></td>
+                                        </tr>
+                                        <tr>
+                                            <th style="text-align: right;">Highest educational attainment:</th>
+                                            <td><select id="ProfileEducation" name="ProfileEducation"><option value="">Please select an option.</option><option>Doctoral degree</option><option>Professional degree</option><option>Master&#39;s degree</option><option>Bachelor&#39;s degree</option><option>Associate&#39;s degree</option><option>Some college</option><option>Graduated high school</option><option>Some high school</option><option>No high school-level education</option> </select></td>
+                                        </tr>
+                                        <tr>
+                                            <th style="text-align: right;">Race:</th>
+                                            <td><select id="ProfileRace" name="ProfileRace"><option value="">Please select an option.</option><option>African American</option><option>American Indian or Native American</option><option>Asian</option><option>Hispanic or Latino/Latina</option><option>Native Hawaiian or Pacific Islander</option><option>White</option><option value="N/A"></option> </select></td>
+                                        </tr>
+                                        <tr>
+                                            <th style="text-align: right;">Total annual household income:</th>
+                                            <td><select id="ProfileIncome" name="ProfileIncome"><option value="">Please select an option.</option><option>Less than $20000</option><option>Between $20000 to $40000</option><option>Between $40001 to $60000</option><option>Between $60001 to $80000</option><option>More than $80000</option><option value="N/A"></option> </select></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="panel-footer" style="text-align: center;"><button class="btn btn-success btn-next-profile">Next</button></div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Instructions</h3>
+                            </div>
+
+                            <div class="panel-body">
+                                <ul>
+                                    <li>In the following task, you will listen to a series of audio recordings from different talkers. Please follow the instructions and provide your impression of the talkers.</li>
+                                    <li>There are altogether 66 questions. Please expect to spend roughly 25 minutes for all of them (approx. 20 seconds per question).</li>
+                                    <li>For each question, the associated audio clip will be automatically played once when the question appears, and you may play it as many times as you like.</li>
+                                    <li>Please respond as quickly as possible. Please report your first impression and do not dwell on a particular file for too long.</li>
+                                    <li>Click on &quot;Next&quot; to begin the task.</li>
+                                </ul>
+                            </div>
+
+                            <div class="panel-footer" style="text-align: center;"><button class="btn btn-success btn-next-instruction">Next</button></div>
+                        </div>
+                    </div>
+
+                    <!-- Below will be the HTML generated by Handlebars for the each rating-->
 
 
-            <!-- Below is the submission page-->
-            <div class="item panel panel-success" id="last_carousel">
-                <div class="panel-body text-center" id="submit-button-container">
-                    <p>You have finished this task. Please click &quot;Submit&quot; to proceed.</p>
+                    <!-- Below is the submission page-->
+                    <div class="item panel panel-success" id="last_carousel">
+                        <div class="panel-body text-center" id="submit-button-container">
+                            <p>You have finished this task. Please click &quot;Submit&quot; to proceed.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
