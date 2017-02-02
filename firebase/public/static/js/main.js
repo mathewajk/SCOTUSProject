@@ -1,21 +1,23 @@
 // main.js
 // Initializes and runs the experiment
 
-var config = {
-    apiKey: "AIzaSyBH6Dbghznz51BUaW_OcQNGoCB5pE2jQ9I",
-    databaseURL: "https://utoronto-scripts.firebaseio.com/",
-    storageBucket: "gs://utoronto-scripts.appspot.com"
-};
-firebase.initializeApp(config);
-
-var storage = firebase.storage();
-var storageRef = storage.ref();
-
 var RatingPerHIT =66;
+
+var dataHeader = "";
+var sharedData = "";
+var fullData = "";
 
 // Function below is executed at run time of the HTML
 $(document).ready(function() {
 
+    var params = getAllUrlParams();
+
+    dataHeader += 'WorkerId';
+    sharedData += params.workerId;
+    console.log(dataHeader + "\n" + sharedData);
+
+    var qualityLabels = ["ScotusMasculine", "ScotusConfident", "ScotusAttractive", "ScotusAggressive", "ScotusIntelligent", "ScotusTrustworthy", "ScotusWin", "ScotusQuality"];
+    
     // Randomize order of qualities
     var qualities = [["Attractive", "Very Attractive", "Very Unattractive"], ["Aggressive", "Very Aggressive", "Very Unaggressive"], ["Intelligent", "Intelligent", "Not Intelligent"], ["Masculine", "Very Masculine", "Not At All Masculine"], ["Trustworthy", "Trustworthy", "Not Trustworthy"], ["Confident", "Very Confident", "Very Timid"]]
     var ordered_qualities = window.knuthShuffle(qualities.slice(0));
@@ -60,6 +62,25 @@ $(document).ready(function() {
         $('#last_carousel').before(template(context));
     }
 
+    $('button.browser').click(function(e){
+        e.preventDefault();
+        $('#browser').hide();
+        $('#consent').show();
+    });
+
+    $('button.no-consent').click(function(e){
+        e.preventDefault();
+        $('#consent').hide();
+        $('#no-consent').show();
+    });
+
+    $('button.consent').click(function(e) {
+        e.preventDefault();
+
+        $('#consent').hide();
+        $('#main').show();
+    });
+
     // Bootstrap Carousel implementation
     $.fn.carousel.Constructor.prototype.keydown = function () {}
     var q_counter = 0;
@@ -75,14 +96,6 @@ $(document).ready(function() {
         var current_slide = $(e.relatedTarget);
         var next_button = current_slide.find('button:first');
         var timeout_length = current_slide.data('timeout-length');
-        if(!timeout_length){ var timeout_length = 17000};
-
-            setTimeout(function(){
-                // Change button class.
-                next_button.removeClass('btn-disabled').addClass('btn-success');
-                // Undisable.
-                next_button.removeAttr('disabled');
-            }, timeout_length);
     });
 
     $('button.btn-next-profile').click(function(e){
@@ -91,13 +104,20 @@ $(document).ready(function() {
         var select_boxes = $('#profile').find('select');
         var valid = true;
 
-        select_boxes.each(function(){
-            if($(this).val() == ""){
+        _.each(select_boxes, function (box) {
+            if($(box).val() == ""){
                 valid = false;
             }
         })
 
         if(valid){
+            _.each(select_boxes, function (box) {
+                dataHeader += ',' + $(box).attr("id");
+                sharedData += ',' + $(box).val();
+            });
+
+            console.log(dataHeader + '\n' + sharedData);
+
             $('#tweets-carousel').carousel('next'); 
         } 
         else {
@@ -110,7 +130,16 @@ $(document).ready(function() {
         $('#tweets-carousel').carousel('next');
         document.getElementById("ScotusAudioID1").autoplay = true;
         document.getElementById("ScotusAudioID1").load();
-    })
+
+        dataHeader += ',TrialIndex';
+        _.each(qualityLabels, function(label) {
+            dataHeader += ',' + label;
+        });
+        dataHeader += '\n';
+        fullData += dataHeader;
+
+        saveData(fullData, storageRef);
+    });
 
     $('button.btn-next-carousel').click(function(e){
         e.preventDefault();
@@ -128,49 +157,30 @@ $(document).ready(function() {
         name_next = name_next+1;
         var validf = true;
 
-        // Check that each quality has a response
-        var radio_name = "ScotusMasculine" + name;
-        if(!$('input[name=' + radio_name + ']').is(':checked')) {
-            validf=false;
-        }
-        radio_name = "ScotusConfident" + name;
-        if(!$('input[name=' + radio_name + ']').is(':checked')) {
-            validf=false;
-        }
-        radio_name = "ScotusAttractive" + name;
-        if(!$('input[name=' + radio_name + ']').is(':checked')) {
-            validf=false;
-        }
-        radio_name = "ScotusAggressive" + name;
-        if(!$('input[name=' + radio_name + ']').is(':checked')) {
-            validf=false;
-        }
-        radio_name = "ScotusIntelligent" + name;
-        if(!$('input[name=' + radio_name + ']').is(':checked')) {
-            validf=false;
-        }
-        radio_name = "ScotusTrustworthy" + name;
-        if(!$('input[name=' + radio_name + ']').is(':checked')) {
-            validf=false;
-        }
-        radio_name = "ScotusWin" + name;
-        if(!$('input[name=' + radio_name + ']').is(':checked')) {
-            validf=false;
-        }
-        radio_name = "ScotusQuality" + name;
-        if(!$('input[name=' + radio_name + ']').is(':checked')) {
-            validf=false;
-        }
+        _.each(qualityLabels, function(label) {
+            var radio_name = label + name;
+            if(!$('input[name=' + radio_name + ']').is(':checked'))
+                validf=false;
+        });
 
         if(validf){ // If all questions have been answered
+            var trialData = '';
+            trialData += ',' + (name_next - 1);
+            _.each(qualityLabels, function(label) {
+                var radio_name = label + name;
+                trialData += ',' + $('input[name=' + radio_name + ']:checked').val();
+            });
+            fullData += sharedData + trialData + '\n';
+            console.log(fullData);
+
             $('#tweets-carousel').carousel('next'); // Goto next question
             if(name != String(RatingPerHIT)){
                 document.getElementById("ScotusAudioID" + name_next).autoplay = true;
                 document.getElementById("ScotusAudioID" + name_next).load();
-            } 
+            }
         } 
         else { // Wait for answers
-            alert("Please complete the questions.");
+            alert("Please answer all of the questions.");
         }
     });
 });
