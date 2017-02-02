@@ -1,4 +1,4 @@
-$.getJSON("static/js/workerIds.json", function(json) {
+$.getJSON("static/json/workerIds.json", function(json) {
     _.each(Object.keys(json.workers), function(worker) {
     	writeUserData(worker);
     });
