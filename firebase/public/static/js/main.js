@@ -34,8 +34,12 @@ $(document).ready(function() {
         return 0;
     }
 
+    var surveyCode = guid();
+    console.log(surveyCode);
+    $("#insert-code").html('TURK' + surveyCode);;
+
     // Generate HTML
-    generateQuestions(qualities, polarities, params);
+    //generateQuestions(qualities, polarities, params);
     
     // Set up callbacks
     $('button.browser').click(onBrowserNext);

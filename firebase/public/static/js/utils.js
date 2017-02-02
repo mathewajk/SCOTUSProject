@@ -29,6 +29,16 @@ function checkWorker(workerId) {
     });
 }
 
+function guid() {
+  return s4() + s4() + s4();
+}
+
+function s4() {
+  return Math.floor((1 + Math.random()) * 0x10000)
+    .toString(16)
+    .substring(1);
+}
+
 // Add a worker to the database with the specified completion value
 function addWorker(workerId, value) {
     var tokenRef = database.ref('workers/' + workerId);
