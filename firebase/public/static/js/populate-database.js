@@ -1,6 +1,6 @@
 $.getJSON("static/json/workerIds.json", function(json) {
     _.each(Object.keys(json.workers), function(worker) {
-        writeUserData(worker, json.workers.worker);
+        addWorker(worker, json.workers[worker]);
     });
 });
 
@@ -19,5 +19,5 @@ function addWorker(workerId, value) {
     tokenRef.set({
         complete : value
     });
-    console.log("Added" + workerId + " to database with completion value 1.");
+    console.log("Added " + workerId + " to database with completion value 1.");
 }
