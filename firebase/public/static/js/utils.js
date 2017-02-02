@@ -1,6 +1,18 @@
 // utils.js
 // Functions to facilitate Firebase actions and URL data
 
+// Firebase params
+var config = {
+    apiKey: "AIzaSyBH6Dbghznz51BUaW_OcQNGoCB5pE2jQ9I",
+    databaseURL: "https://utoronto-scripts.firebaseio.com/",
+    storageBucket: "gs://utoronto-scripts.appspot.com"
+};
+firebase.initializeApp(config);
+
+var storage = firebase.storage();
+var storageRef = storage.ref();
+var database = firebase.database();
+
 // Save results to Firebase
 function saveData(filedata, dataRef){
     console.log("Saving...");
@@ -35,7 +47,7 @@ function addWorker(workerId, value) {
     tokenRef.set({
         complete : value
     });
-    console.log("Added worker " + workerId + " with completion value " + value ".");
+    console.log("Added worker " + workerId + " with completion value " + value + ".");
 }
 
 // Update a worker's completion value
@@ -43,7 +55,7 @@ function updateStatus(workerId, value) {
     var updates = {};
     updates['workerId/' + complete] = value;
     firebase.database().ref().update(updates);
-    console.log("Updated worker " + workerId + " to completion value " + value ".");
+    console.log("Updated worker " + workerId + " to completion value " + value + ".");
 }
 
 // Read the URL parameters
