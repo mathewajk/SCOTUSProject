@@ -26,11 +26,9 @@ $( document ).ready(function() {
     var assignmentId = turkGetParam('assignmentId', '');
 
     // Build the parameter string from our inputs
-    paramString = "&";
+    var paramString = '';
     _.each(audio, function(audioId, index) {
-        paramString += index + "=" + audioId;
-        if(index < audio.length - 1)
-            paramString += "&";
+        paramString += '&a' + index + '=' + audioId;
     });
 
     // The base URL of the experiment. Must be updated if the experiment changes locations!
