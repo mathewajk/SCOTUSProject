@@ -13,18 +13,17 @@ function saveData(filedata, dataRef){
 function checkWorker(workerId) {
     return firebase.database().ref('workers/' + workerId).once('value').then(function(snapshot) {
         if(!snapshot.val()) {
-            console.log("Not found!");
+            console.log("Worker not found.");
             return false;
         }
         console.log("Found!");
         if(snapshot.val().complete == 1) {
-            console.log("They've done the thing!");
-
+            console.log("Worker has completed the HIT.");
             $('#browser').hide();
             $('#error').show();
-            
             return true;
         }
+        console.log("Worker's completion value is not 1.");
         return false;
     });
 }

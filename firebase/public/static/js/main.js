@@ -35,11 +35,10 @@ $(document).ready(function() {
     }
 
     var surveyCode = guid();
-    console.log(surveyCode);
     $("#insert-code").html('TURK' + surveyCode);;
 
     // Generate HTML
-    //generateQuestions(qualities, polarities, params);
+    generateQuestions(qualities, polarities, params);
     
     // Set up callbacks
     $('button.browser').click(onBrowserNext);
@@ -80,9 +79,6 @@ $(document).ready(function() {
                     dataHeader += ',' + $(box).attr("id");
                     sharedData += ',' + $(box).val();
             });
-
-            console.log(dataHeader + '\n' + sharedData);
-
             $('#tweets-carousel').carousel('next'); 
         } 
         else {
@@ -136,7 +132,6 @@ $(document).ready(function() {
                 trialData += ',' + $('input[name=' + radio_name + ']:checked').val();
             });
             fullData += sharedData + trialData + '\n';
-            console.log(fullData);
 
             if(currentQuestion % 11 == 0) { // Save data every 1/6 of the way
                 saveData(fullData, dataRef);
