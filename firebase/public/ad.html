@@ -28,7 +28,7 @@ $( document ).ready(function() {
     // Build the parameter string from our inputs
     var paramString = '';
     _.each(audio, function(audioId, index) {
-        paramString += '&a' + index + '=' + audioId;
+        paramString += '&a' + (index+1) + '=' + audioId;
     });
 
     // The base URL of the experiment. Must be updated if the experiment changes locations!

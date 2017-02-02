@@ -27,7 +27,6 @@ var dataRef = storageRef.child('testing' + params.workerId + '.csv');
 
 // Function below is executed at run time of the HTML
 $(document).ready(function() {
-    console.log(audioNames[2000]);
 
     if(!checkWorker(params.workerId)) {
         $('#browser').hide();

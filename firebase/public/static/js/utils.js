@@ -101,7 +101,7 @@ function getAllUrlParams(url) {
   return obj;
 }
 
-function generateQuestions(qualities, polarities) {
+function generateQuestions(qualities, polarities, params) {
     var ordered_qualities = window.knuthShuffle(qualities.slice(0));
 
     // Randomize polarity
@@ -138,7 +138,7 @@ function generateQuestions(qualities, polarities) {
         }
 
         // Create and append the HTML
-        context = {num: String(i), total: String(RatingPerHIT), audio_name: $("#audio" + String(i)).html(), rating: inputs};
+        context = {num: String(i), total: String(RatingPerHIT), audio_name: audioNames[parseInt(params['a' + i], 10)], rating: inputs};
         $('#last_carousel').before(template(context));
     }
 }
