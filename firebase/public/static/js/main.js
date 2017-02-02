@@ -18,19 +18,6 @@ var storage = firebase.storage();
 var storageRef = storage.ref();
 
 var RatingPerHIT =66;
-
-// Below is a function required by for Unique Turker
-function turkGetParam( name ) {
-    name = name.replace(/[[]/,"\[").replace(/[]]/,"\]");
-    var regexS = "[?&]"+name+"=([^&#]*)";
-    var regex = new RegExp( regexS );
-    var results = regex.exec( window.location.href );
-    if( results == null )
-        return "";
-    else
-        return results[1];
-}
-
 // Below function is exceuted at run time of the html
 $(document).ready(function() {
 
@@ -73,42 +60,8 @@ $(document).ready(function() {
         context = {num: String(i), total: String(RatingPerHIT), audio_name: $("#audio" + String(i)).html(), rating: inputs};
         $('#last_carousel').before(template(context));
     }
-
-    //Unique Turker Implementation
-    var ut_id = "f0b0070cc04aff49fd28cb73d09e3cdf"; //Use a new id obtained from Unique Turker for a new release
-    var assignmentId = turkGetParam('assignmentId', '');
-    if (assignmentId != '' && assignmentId != 'ASSIGNMENT_ID_NOT_AVAILABLE') {
-        var workerId = turkGetParam('workerId', '');
-        var url = '//uniqueturker.myleott.com/'+ut_id+'/'+workerId+'/'+assignmentId;
-        var request = new XMLHttpRequest();
-        request.open('GET', url, false);
-        request.send();
-        if (request.responseText != '1' && workerId != "ADKT3VGSIZR5B") { // Change this workerId to the requester's id such that the account won't be blocked during testing
-            $("#workerNotFound").hide();
-            $("#beforeAccept").hide();
-            $("#workerFound").show();
-            $("#submitButton").hide();
-        }
-        else {
-            $("#workerNotFound").show();
-            $("#beforeAccept").hide();
-            $("#workerFound").hide();
-            $("#submitButton").show();
-        }
-    }
-    else {
-        $("#workerNotFound").hide();
-        $("#beforeAccept").show();
-        $("#workerFound").hide();
-        $("#submitButton").hide();
-    }
-});
-</script><script rel="text/javascript">
-
-
-$( document ).ready(function() {
-    //Bootstrap Carousel Implementation No need to
-///////////////////////////////////////////////////////////////////////////// 
+    
+    //Bootstrap Carousel Implementation
     $.fn.carousel.Constructor.prototype.keydown = function () {}
     var q_counter = 0;
 
