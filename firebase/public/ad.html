@@ -1,0 +1,303 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<link href="https://s3.amazonaws.com/mturk-public/bs30/css/bootstrap.min.css" rel="stylesheet" />
+
+<script>
+
+function turkGetParam( name ) {
+    name = name.replace(/[[]/,"\[").replace(/[]]/,"\]");
+    var regexS = "[?&]"+name+"=([^&#]*)";
+    var regex = new RegExp( regexS );
+    var results = regex.exec( window.location.href );
+    if( results == null )
+        return "";
+    else
+        return results[1];
+}
+
+var audio = ["${ScotusAudio1}","${ScotusAudio2}","${ScotusAudio3}","${ScotusAudio4}","${ScotusAudio5}","${ScotusAudio6}","${ScotusAudio7}","${ScotusAudio8}","${ScotusAudio9}","${ScotusAudio10}","${ScotusAudio11}","${ScotusAudio12}","${ScotusAudio13}","${ScotusAudio14}","${ScotusAudio15}","${ScotusAudio16}","${ScotusAudio17}","${ScotusAudio18}","${ScotusAudio19}","${ScotusAudio20}","${ScotusAudio21}","${ScotusAudio22}","${ScotusAudio23}","${ScotusAudio24}","${ScotusAudio25}","${ScotusAudio26}","${ScotusAudio27}","${ScotusAudio28}","${ScotusAudio29}","${ScotusAudio30}","${ScotusAudio31}","${ScotusAudio32}","${ScotusAudio33}","${ScotusAudio34}","${ScotusAudio35}","${ScotusAudio36}","${ScotusAudio37}","${ScotusAudio38}","${ScotusAudio39}","${ScotusAudio40}","${ScotusAudio41}","${ScotusAudio42}","${ScotusAudio43}","${ScotusAudio44}","${ScotusAudio45}","${ScotusAudio46}","${ScotusAudio47}","${ScotusAudio48}","${ScotusAudio49}","${ScotusAudio50}","${ScotusAudio51}","${ScotusAudio52}","${ScotusAudio53}","${ScotusAudio54}","${ScotusAudio55}","${ScotusAudio56}","${ScotusAudio57}","${ScotusAudio58}","${ScotusAudio59}","${ScotusAudio60}","${ScotusAudio61}","${ScotusAudio62}","${ScotusAudio63}","${ScotusAudio64}","${ScotusAudio65}","${ScotusAudio66}"];
+
+$( document ).ready(function() { 
+
+    // Assignment ID is used to check whether or not the HIT has been accepted
+    var assignmentId = turkGetParam('assignmentId', '');
+
+    // Build the parameter string from our inputs
+    paramString = "&";
+    _.each(audio, function(audioId, index) {
+        paramString += index + "=" + audioId;
+        if(index < audio.length - 1)
+            paramString += "&";
+    }
+
+    // The base URL of the experiment. Must be updated if the experiment changes locations!
+    var link = 'https://utoronto-scripts.firebaseapp.com/scotus_pilot_6.html';
+
+    // If the HIT has been accepted...
+    if (assignmentId != '' && assignmentId != 'ASSIGNMENT_ID_NOT_AVAILABLE') {
+        
+        // WorkerID must be passed along to the experiment
+        var workerId = turkGetParam('workerId', '');
+        $("#afterAccept").show();
+        $("#beforeAccept").hide();
+        $("#submitButton").show();
+
+        // Add worker ID to the URL
+        if(workerId != '' && workerId != undefined) {
+            link += '?workerId=' + workerId;
+        }
+    }
+    else { // If this is a test run, use "temp"
+        link += '?workerId=temp';
+
+        $("#afterAccept").hide();
+        $("#beforeAccept").show();
+        $("#submitButton").hide();
+    }
+
+    // Add the param string to the URL and inset it into the page
+    link += paramString;
+    $('#expt-link').attr('href', link);
+
+    $('#submitButton').appendTo($('div#submit-button-container'));
+});
+</script>
+
+<div id="beforeAccept">
+    <div style="margin: 20px auto; width: 800px;">
+        <div style="margin: 20px auto; width: 800px;">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h1 class="panel-title" style="text-align: center; font-size: 150%">Speech Rating Study</h1>
+                </div>
+                <div class="panel-body" style="text-align: center;">Phonology Laboratory, Department of Linguistics, University of Chicago</div>
+            </div>
+        </div>
+
+        <div class="panel panel-danger">
+            <div class="panel-heading" style="text-align: center;">
+                <strong>Please do not complete more than one HIT in this batch. You will not be paid for multiple submissions.<br/>Upon clicking the study link, you will be checked against our database of workers who have already completed this study or another disqualifying study and will be alerted if you are unable to proceed.</strong>
+            </div>
+        </div>
+        
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h1 class="panel-title">Overview</h1>
+            </div> 
+            
+            <ul>
+                   <li>This study aims to better understand your perception of other people's speech. The sections of the study, all to be completed within 1&nbsp;hour in one single sitting, are in the format of short questionnaires and tasks on:
+                   <ul>
+                       <li>Your demographic information</li>
+                       <li>Your opinions on 66 short audio clips</li>
+                   </ul>
+                   </li>
+                   <li>All information collected will be kept anonymous and confidential.</li>
+            </ul>
+        </div>
+        
+        <div class="panel panel-info" id="audio">
+            <div class="panel-heading">
+                <h3 class="panel-title">System/Hardware Requirements</h3>
+            </div>
+
+            <div class="panel-body">
+                <h4>Headphones</h4>
+                <ul>
+                   <li>To participate in this task you will need headphones.</li>
+                   <li>Please put on your headphones now if you have not done so. Check browser compatibility and adjust the speaker volume using the following sound.</li>
+                </ul>
+
+                <p align="center">
+                <audio controls="controls" preload="auto"><source src="http://hum.uchicago.edu/phonlab/MTURKTASKS/VAS/practice_be300_33.wav" type="audio/wav" /> [NOT SUPPORTED]</audio>
+                </p>
+
+                <hr/>
+
+                <h4>Web Browser</h4>
+
+                <p>For this study, we strongly recommend <strong>Chrome</strong> or <strong>Firefox</strong>.</p>
+
+                <p>Please ensure that your internet connection will be stable throughout the HIT. Because this HIT requires you to load a large number of audio files, as well as to record and upload your voice via a web module, it runs best on a fast internet conenction. If your current actual download speed is at least 1 Mbps (to test your current connection speed in a new tab: <a href="http://www.speedtest.net">http://www.speedtest.net/</a>), your connection should be fast enough.</p>
+            </div>
+        </div>
+
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <h1 class="panel-title">Time Limit</h1>
+            </div>
+
+            <div class="panel-body">
+                <p>This study takes approximately <b>25 minutes</b> to complete at a normal and comfortable pace. The absolute time limit is <b>1 hour</b>. Please make sure you have enough time to complete the task in one sitting.</p>
+            </div>
+        </div>
+
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <h1 class="panel-title">Participant Requirements</h1>
+            </div>
+
+            <div class="panel-body">
+                <p>In order to participate in this study, you <b>must</b> meet the following criteria:</p>
+                <ul>
+                    <li>You <strong>have not completed</strong> this study or similar studies previously. Attempts to subvert the screening process will result in a rejection.</li>
+                    <li>You are <b>at least 18 years old</b>.</li>
+                    <li>You are <strong>native speaker</strong> of American English. For our purposes, you are a native speaker of American English if:</li>
+                        <ul><li>You were <b>born in the United States</b>.</li>
+                            <li>You <b>lived in the U.S. from birth through age 12</b>.</li>
+                            <li>The <b>members of the household you grew up in spoke primarily English.</b></li>
+                        </ul>
+                    <li>You have <strong>no history</strong> of history of hearing loss, language disorders, or communication disorders.</li>
+                    <li>You have <b>no history</b> of substance dependence, stroke, mental retardation, traumatic brain injury (with loss of consciousness lasting for more than one hour), multiple sclerosis, Parkinson's disease, Alzheimer's disease, Huntington's disease, schizophrenia, bipolar, autism, or ADHD.</li>
+                    <li>You are <b>not</b> currently experiencing major depression.</li>
+                </ul>
+                <p>
+                    <span style="color: red;"><b>If you do not meet these criteria, we cannot use your data. Please do not accept this HIT if you are not eligible.</b></span>
+                </p>
+            </div>
+        </div>
+
+        <div class="panel panel-danger">
+            <div class="panel-footer text-center">
+                <p><b><span style="color: red;">IMPORTANT</span></b></p><p>It has come to our attention that on occasion, the link to the study fails to appear below. If no study link appears after you accept this HIT, your browser is not loading the HIT correctly. Should this occur, <b>do not click</b> Submit, and <b>do not</b> attempt to obtain a study link from anyone else. First, please try refreshing the page or loading the HIT in a different browser. If the link still does not appear, please contact the lab.</p>
+            </div> 
+        </div>
+    </div>
+</div>
+
+<div id="afterAccept" style="display: none;">
+    <div style="margin: 20px auto; width: 800px;">
+        <div style="margin: 20px auto; width: 800px;">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h1 class="panel-title" style="text-align: center; font-size: 150%">Speech Rating Study</h1>
+                </div>
+                <div class="panel-body" style="text-align: center;">Phonology Laboratory, Department of Linguistics, University of Chicago</div>
+            </div>
+        </div>
+
+        <div class="panel panel-danger">
+            <div class="panel-heading" style="text-align: center;">
+                <strong>Please do not complete more than one HIT in this batch. You will not be paid for multiple submissions.<br/>Upon clicking the study link, you will be checked against our database of workers who have already completed this study or another disqualifying study and will be alerted if you are unable to proceed.</strong>
+            </div>
+        </div>
+        
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h1 class="panel-title">Overview</h1>
+            </div> 
+            
+            <ul>
+                   <li>This study aims to better understand your perception of other people's speech. The sections of the study, all to be completed within 1&nbsp;hour in one single sitting, are in the format of short questionnaires and tasks on:
+                   <ul>
+                       <li>Your demographic information</li>
+                       <li>Your opinions on 66 short audio clips</li>
+                   </ul>
+                   </li>
+                   <li>All information collected will be kept anonymous and confidential.</li>
+            </ul>
+        </div>
+        
+        <div class="panel panel-info" id="audio">
+            <div class="panel-heading">
+                <h3 class="panel-title">System/Hardware Requirements</h3>
+            </div>
+
+            <div class="panel-body">
+                <h4>Headphones</h4>
+                <ul>
+                   <li>To participate in this task you will need headphones.</li>
+                   <li>Please put on your headphones now if you have not done so. Check browser compatibility and adjust the speaker volume using the following sound.</li>
+                </ul>
+
+                <p align="center">
+                <audio controls="controls" preload="auto"><source src="http://hum.uchicago.edu/phonlab/MTURKTASKS/VAS/practice_be300_33.wav" type="audio/wav" /> [NOT SUPPORTED]</audio>
+                </p>
+
+                <hr/>
+
+                <h4>Web Browser</h4>
+
+                <p>For this study, we strongly recommend <strong>Chrome</strong> or <strong>Firefox</strong>.</p>
+
+                <p>Please ensure that your internet connection will be stable throughout the HIT. Because this HIT requires you to load a large number of audio files, as well as to record and upload your voice via a web module, it runs best on a fast internet conenction. If your current actual download speed is at least 1 Mbps (to test your current connection speed in a new tab: <a href="http://www.speedtest.net">http://www.speedtest.net/</a>), your connection should be fast enough.</p>
+            </div>
+        </div>
+
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <h1 class="panel-title">Time Limit</h1>
+            </div>
+
+            <div class="panel-body">
+                <p>This study takes approximately <b>25 minutes</b> to complete at a normal and comfortable pace. The absolute time limit is <b>1 hour</b>. Please make sure you have enough time to complete the task in one sitting.</p>
+            </div>
+        </div>
+
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <h1 class="panel-title">Participant Requirements</h1>
+            </div>
+
+            <div class="panel-body">
+                <p>In order to participate in this study, you <b>must</b> meet the following criteria:</p>
+                <ul>
+                    <li>You <strong>have not completed</strong> this study or similar studies previously. Attempts to subvert the screening process will result in a rejection.</li>
+                    <li>You are <b>at least 18 years old</b>.</li>
+                    <li>You are <strong>native speaker</strong> of American English. For our purposes, you are a native speaker of American English if:</li>
+                        <ul><li>You were <b>born in the United States</b>.</li>
+                            <li>You <b>lived in the U.S. from birth through age 12</b>.</li>
+                            <li>The <b>members of the household you grew up in spoke primarily English.</b></li>
+                        </ul>
+                    <li>You have <strong>no history</strong> of history of hearing loss, language disorders, or communication disorders.</li>
+                    <li>You have <b>no history</b> of substance dependence, stroke, mental retardation, traumatic brain injury (with loss of consciousness lasting for more than one hour), multiple sclerosis, Parkinson's disease, Alzheimer's disease, Huntington's disease, schizophrenia, bipolar, autism, or ADHD.</li>
+                    <li>You are <b>not</b> currently experiencing major depression.</li>
+                </ul>
+                <p>
+                    <span style="color: red;"><b>If you do not meet these criteria, we cannot use your data. Please do not accept this HIT if you are not eligible.</b></span>
+                </p>
+            </div>
+        </div>
+
+        <div class="panel panel-danger">
+            <div class="panel-footer text-center">
+                <p><b><span style="color: red;">IMPORTANT</span></b></p><p>It has come to our attention that on occasion, the link to the study fails to appear below. If no study link appears after you accept this HIT, your browser is not loading the HIT correctly. Should this occur, <b>do not click</b> Submit, and <b>do not</b> attempt to obtain a study link from anyone else. First, please try refreshing the page or loading the HIT in a different browser. If the link still does not appear, please contact the lab.</p>
+            </div> 
+        </div>
+
+        <div class="panel panel-primary">
+            <div class="panel-heading"><strong>Instructions</strong></div>
+            <div class="panel-body">
+                <p>Please click the link below to complete the study. At the end of the study, you will receive an identifier code to paste into the box below to receive credit for your participation.</p>
+
+                <p><strong>Make sure to leave this window open as you complete the study. </strong> When you are finished, you will return to this page to paste the code into the box.</p>
+            
+                <!-- End Instruction -->
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><strong>Study link:</strong></td>
+                            <td><a id="expt-link" href="" target="blank">Click Here</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Provide the code here:</strong></td>
+                            <td style="vertical-align: middle;"><input class="form-control" id="studycode" name="studycode" placeholder="e.g. 123456" type="text" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="panel-footer">
+                <div id="submit-button-container" class="panel-body text-center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- close container section -->
+<style type="text/css">td {
+    font-size:1.0em;
+    padding:5px 5px;
+}
+
+</style>
