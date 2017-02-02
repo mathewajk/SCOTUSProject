@@ -10,5 +10,4 @@ var qualityLabels = ["ScotusMasculine", "ScotusConfident", "ScotusAttractive",
                      "ScotusAggressive", "ScotusIntelligent", "ScotusTrustworthy", 
                      "ScotusWin", "ScotusQuality"];
     
-
 var RatingPerHIT = 66;
