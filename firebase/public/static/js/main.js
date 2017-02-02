@@ -27,16 +27,64 @@ var dataRef = storageRef.child('testing' + params.workerId + '.csv');
 
 // Function below is executed at run time of the HTML
 $(document).ready(function() {
+
+    if(!checkWorker(params.workerId)) {
+        $('#browser').hide();
+        $('#error').show();
+        return 0;
+    }
+
     // Generate HTML
-    
     generateQuestions(qualities, polarities, params);
     
     // Set up callbacks
     $('button.browser').click(onBrowserNext);
     $('button.no-consent').click(onNoConsentClicked);
     $('button.consent').click(onConsentClicked);
-    $('button.btn-next-profile').click(onProfileNext);
-    $('button.btn-next-instruction').click(onInstructionsNext);
+    
+    $('button.btn-next-instruction').click(function(e) {
+        e.preventDefault();
+
+        $('#tweets-carousel').carousel('next');
+        document.getElementById("ScotusAudioID1").autoplay = true;
+        document.getElementById("ScotusAudioID1").load();
+
+        dataHeader += ',TrialIndex';
+        _.each(qualityLabels, function(label) {
+          dataHeader += ',' + label;
+        });
+        dataHeader += '\n';
+        fullData += dataHeader;
+
+        saveData(fullData, dataRef);
+    });
+
+    $('button.btn-next-profile').click(function(e) {
+        e.preventDefault();
+
+        var select_boxes = $('#profile').find('select');
+        var valid = true;
+
+        _.each(select_boxes, function (box) {
+            if($(box).val() == ""){
+                valid = false;
+            }
+        })
+
+        if(valid){
+            _.each(select_boxes, function (box) {
+                    dataHeader += ',' + $(box).attr("id");
+                    sharedData += ',' + $(box).val();
+            });
+
+            console.log(dataHeader + '\n' + sharedData);
+
+            $('#tweets-carousel').carousel('next'); 
+        } 
+        else {
+               alert("Please choose an option for each question before continuing.");
+        }  
+    });
 
     // Bootstrap Carousel implementation
     $.fn.carousel.Constructor.prototype.keydown = function () {}
@@ -66,31 +114,37 @@ $(document).ready(function() {
     $('button.btn-next-tweet').click(function(e){
         e.preventDefault();
 
-        var name = $(this).attr('name');
-        name_next = parseInt(name, 10);
-        name_next = name_next+1;
-        var validf = true;
+        var buttonName = $(this).attr('name');
+        currentQuestion = parseInt(buttonName, 10);
+        nextQuestion = currentQuestion+1;
 
+        var validf = true;
         _.each(qualityLabels, function(label) {
-            var radio_name = label + name;
+            var radio_name = label + buttonName;
             if(!$('input[name=' + radio_name + ']').is(':checked'))
                 validf=false;
         });
 
         if(validf){ // If all questions have been answered
-            var trialData = '';
-            trialData += ',' + (name_next - 1);
+            var trialData = ',' + currentQuestion;
             _.each(qualityLabels, function(label) {
-                var radio_name = label + name;
+                var radio_name = label + buttonName;
                 trialData += ',' + $('input[name=' + radio_name + ']:checked').val();
             });
             fullData += sharedData + trialData + '\n';
             console.log(fullData);
 
+            if(currentQuestion % 11 == 0) { // Save data every 1/6 of the way
+                saveData(fullData, dataRef);
+                if(currentQuestion == 66) { // If they're done, add them to the database
+                    addWorker(workerId, 1);
+                }
+            }
+
             $('#tweets-carousel').carousel('next'); // Goto next question
             if(name != String(RatingPerHIT)){
-                document.getElementById("ScotusAudioID" + name_next).autoplay = true;
-                document.getElementById("ScotusAudioID" + name_next).load();
+                document.getElementById("ScotusAudioID" + nextQuestion).autoplay = true;
+                document.getElementById("ScotusAudioID" + nextQuestion).load();
             }
         } 
         else { // Wait for answers
