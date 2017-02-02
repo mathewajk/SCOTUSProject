@@ -54,7 +54,7 @@ table {
         <div class="panel-heading">Recording {{num}} of {{total}}</div>
 
         <div class="panel-body">
-            //change the source src here to the correct directory(folder)
+            // Change <source src="..."></source> here to the correct directory
             <p  align="center"><audio controls="controls" id="ScotusAudioID{{num}}" preload="auto"><source src="http://projects.rcc.uchicago.edu/aclyu/oyez/{{audio_name}}" type="audio/wav" /></audio></p>
             <p><br/>1. Please provide your impression of the voice recording in the matrix below:</p>
             <table align="center">
@@ -94,53 +94,84 @@ table {
     </div>
 </script>
 
-<!--If the worker has not taken this HIT before (Where the main body of the survey is)-->
-<div id="workerNotFound" style="display: none;">
-    <div style="margin: 20px auto; width: 800px;">
-        <div class="carousel slide" data-interval="false" data-ride="carousel" data-wrap="false" id="tweets-carousel">
-            <div class="carousel-inner">
-                <div class="item active">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Instructions</h3>
-                        </div>
-
-                        <div class="panel-body">
-                            <ul>
-                            	<li>In the following task, you will listen to a series of audio recordings from different talkers. Please follow the instructions and provide your impression of the talkers.</li>
-                            	<li>There are altogether 66 questions. Please expect to spend roughly 25 minutes for all of them (approx. 20 seconds per question).</li>
-                            	<li>For each question, the associated audio clip will be automatically played once when the question appears, and you may play it as many times as you like.</li>
-                            	<li>Please respond as quickly as possible. Please report your first impression and do not dwell on a particular file for too long.</li>
-                            	<li>Click on &quot;Next&quot; to begin the task.</li>
-                            </ul>
-                        </div>
-
-                        <div class="panel-footer" style="text-align: center;"><button class="btn btn-success btn-next-instruction">Next</button></div>
+<div style="margin: 20px auto; width: 800px;">
+    <div class="carousel slide" data-interval="false" data-ride="carousel" data-wrap="false" id="tweets-carousel">
+        <div class="carousel-inner">
+            <div class="item active" data-timeout-length="10000" id="profile">
+                <div class="panel panel-primary" data-timeout-length="10000" id="profile">
+                    <div class="panel-heading">
+                        <div class="panel-title">Profile</div>
                     </div>
+
+                    <div class="panel-body">
+                        <p>Please answer the following questions:</p>
+
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th style="text-align: right;">Year of birth:</th>
+                                    <td><select id="ProfileYear" name="ProfileYear"><option value="">Please select an option.</option><option>1996</option><option>1995</option><option>1994</option><option>1993</option><option>1992</option><option>1991</option><option>1990</option><option>1989</option><option>1988</option><option>1987</option><option>1986</option><option>1985</option><option>1984</option><option>1983</option><option>1982</option><option>1981</option><option>1980</option><option>1979</option><option>1978</option><option>1977</option><option>1976</option><option>1975</option><option>1974</option><option>1973</option><option>1972</option><option>1971</option><option>1970</option><option>1969</option><option>1968</option><option>1967</option><option>1966</option><option>1965</option><option>1964</option><option>1963</option><option>1962</option><option>1961</option><option>1960</option><option>1959</option><option>1958</option><option>1957</option><option>1956</option><option>1955</option><option>1954</option><option>1953</option><option>1952</option><option>1951</option><option>1950</option><option>1949</option><option>1948</option><option>1947</option><option>1946</option><option>1945</option><option>1944</option><option>1943</option><option>1942</option><option>1941</option><option>1940</option><option>1939</option><option>1938</option><option>1937</option><option>1936</option><option>1935</option><option>1934</option><option>1933</option><option>1932</option><option>1931</option><option>1930</option><option>1929</option><option>1928</option><option>1927</option><option>1926</option><option>1925</option><option>1924</option><option>1923</option><option>1922</option><option>1921</option><option>1920</option><option>1919</option><option>1918</option><option>1917</option><option>1916</option><option>1915</option><option>1914</option><option value="N/A"></option> </select></td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align: right;">Gender:</th>
+                                    <td><select id="ProfileGender" name="ProfileGender"><option value="">Please select an option.</option><option>Male</option><option>Female</option><option value="N/A"></option> </select></td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align: right;">State of residence:</th>
+                                    <td><select id="ProfileState" name="ProfileState"><option value="">Please select an option.</option><option>Alabama</option><option>Alaska</option><option>Arizona</option><option>Arkansas</option><option>California</option><option>Colorado</option><option>Connecticut</option><option>Delaware</option><option>District of Columbia</option><option>Florida</option><option>Georgia</option><option>Hawaii</option><option>Idaho</option><option>Illinois</option><option>Indiana</option><option>Iowa</option><option>Kansas</option><option>Kentucky</option><option>Louisiana</option><option>Maine</option><option>Maryland</option><option>Massachusetts</option><option>Michigan</option><option>Minnesota</option><option>Mississippi</option><option>Missouri</option><option>Montana</option><option>Nebraska</option><option>Nevada</option><option>New Hampshire</option><option>New Jersey</option><option>New Mexico</option><option>New York</option><option>North Carolina</option><option>North Dakota</option><option>Ohio</option><option>Oklahoma</option><option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option><option>South Carolina</option><option>South Dakota</option><option>Tennessee</option><option>Texas</option><option>Utah</option><option>Vermont</option><option>Virginia</option><option>Washington</option><option>West Virginia</option><option>Wisconsin</option><option>Wyoming</option> </select></td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align: right;">Highest educational attainment:</th>
+                                    <td><select id="ProfileEducation" name="ProfileEducation"><option value="">Please select an option.</option><option>Doctoral degree</option><option>Professional degree</option><option>Master&#39;s degree</option><option>Bachelor&#39;s degree</option><option>Associate&#39;s degree</option><option>Some college</option><option>Graduated high school</option><option>Some high school</option><option>No high school-level education</option> </select></td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align: right;">Race:</th>
+                                    <td><select id="ProfileRace" name="ProfileRace"><option value="">Please select an option.</option><option>African American</option><option>American Indian or Native American</option><option>Asian</option><option>Hispanic or Latino/Latina</option><option>Native Hawaiian or Pacific Islander</option><option>White</option><option value="N/A"></option> </select></td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align: right;">Total annual household income:</th>
+                                    <td><select id="ProfileIncome" name="ProfileIncome"><option value="">Please select an option.</option><option>Less than $20,000</option><option>Between $20,000 to $40,000</option><option>Between $40,001 to $60,000</option><option>Between $60,001 to $80,000</option><option>More than $80,000</option><option value="N/A"></option> </select></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="panel-footer" style="text-align: center;"><button class="btn btn-disabled btn-next-profile" disabled="disabled">Next</button></div>
                 </div>
-
-                <!-- Below will be the HTML generated by Handlebars for the each rating-->
-
-
-                <!-- Below is the submission page-->
-                <div class="item panel panel-success" id="last_carousel">
-                    <div class="panel-body text-center" id="submit-button-container">
-                        <p>You have finished this task. Please click &quot;Submit&quot; to proceed.</p>
+            </div>
+            <div class="item">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Instructions</h3>
                     </div>
+
+                    <div class="panel-body">
+                        <ul>
+                            <li>In the following task, you will listen to a series of audio recordings from different talkers. Please follow the instructions and provide your impression of the talkers.</li>
+                            <li>There are altogether 66 questions. Please expect to spend roughly 25 minutes for all of them (approx. 20 seconds per question).</li>
+                            <li>For each question, the associated audio clip will be automatically played once when the question appears, and you may play it as many times as you like.</li>
+                            <li>Please respond as quickly as possible. Please report your first impression and do not dwell on a particular file for too long.</li>
+                            <li>Click on &quot;Next&quot; to begin the task.</li>
+                        </ul>
+                    </div>
+
+                    <div class="panel-footer" style="text-align: center;"><button class="btn btn-success btn-next-instruction">Next</button></div>
+                </div>
+            </div>
+
+            <!-- Below will be the HTML generated by Handlebars for the each rating-->
+
+
+            <!-- Below is the submission page-->
+            <div class="item panel panel-success" id="last_carousel">
+                <div class="panel-body text-center" id="submit-button-container">
+                    <p>You have finished this task. Please click &quot;Submit&quot; to proceed.</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!--If the worker has taken the HIT-->
-<div id="workerFound" style="display: none;">It appears that you have already taken a HIT in this batch. Please return the HIT now to avoid any negative impact on your approval rating.</div>
-
-
-<!-- This allows Amazon Mturk to grab audio names from an input csv file
-     Needs to be changed if the number of ratings per HIT is changed.
- -->
-<div class="hidden">
 <p id="audio1">${ScotusAudio1}</p>
 
 <p id="audio2">${ScotusAudio2}</p>
@@ -272,4 +303,3 @@ table {
 <p id="audio65">${ScotusAudio65}</p>
 
 <p id="audio66">${ScotusAudio66}</p>
-</div>
