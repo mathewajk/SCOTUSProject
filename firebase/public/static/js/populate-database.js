@@ -1,6 +1,6 @@
 $.getJSON("static/json/workerIds.json", function(json) {
     _.each(Object.keys(json.workers), function(worker) {
-    	writeUserData(worker);
+        writeUserData(worker, json.workers.worker);
     });
 });
 
@@ -14,10 +14,10 @@ var config = {
 firebase.initializeApp(config);
 var database = firebase.database();
 
-function addWorker(workerId) {
+function addWorker(workerId, value) {
     var tokenRef = database.ref('workers/' + workerId);
     tokenRef.set({
-        complete : 1
+        complete : value
     });
     console.log("Added" + workerId + " to database with completion value 1.");
 }
