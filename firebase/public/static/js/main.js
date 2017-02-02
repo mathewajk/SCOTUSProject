@@ -1,16 +1,10 @@
 // main.js
 // Initializes and runs the experiment
 
-/* Firebase initialization */
-
-/* TODO: 
- *       Add gap to all questions?
- */
-
 var config = {
-    apiKey: "AIzaSyCTN6pTd4DI-fbNFPKGCzk_MH9gkf9Y9IU",
-    databaseURL: "https://phonology-lab-scripts.firebaseio.com/",
-    storageBucket: "gs://phonology-lab-scripts.appspot.com"
+    apiKey: "AIzaSyBH6Dbghznz51BUaW_OcQNGoCB5pE2jQ9I",
+    databaseURL: "https://utoronto-scripts.firebaseio.com/",
+    storageBucket: "gs://utoronto-scripts.appspot.com"
 };
 firebase.initializeApp(config);
 
@@ -18,26 +12,29 @@ var storage = firebase.storage();
 var storageRef = storage.ref();
 
 var RatingPerHIT =66;
-// Below function is exceuted at run time of the html
+
+// Function below is executed at run time of the HTML
 $(document).ready(function() {
 
-    //randomize order
+    // Randomize order of qualities
     var qualities = [["Attractive", "Very Attractive", "Very Unattractive"], ["Aggressive", "Very Aggressive", "Very Unaggressive"], ["Intelligent", "Intelligent", "Not Intelligent"], ["Masculine", "Very Masculine", "Not At All Masculine"], ["Trustworthy", "Trustworthy", "Not Trustworthy"], ["Confident", "Very Confident", "Very Timid"]]
-    var ordered_qualities = window.knuthShuffle(qualities.slice(0)); // randomize
-    //ordered_qualities = ordered_qualities.slice(1,4); // select only first 3 qualities
+    var ordered_qualities = window.knuthShuffle(qualities.slice(0));
+    // ordered_qualities = ordered_qualities.slice(1,4); // select only first 3 qualities
 
-    //randomize polarity
-    var polarities = [1,1,1,0,0,0]; //Number of elements must match the number of qualities
-    //numbers of 1 and 0 decides how many rating has positive to negative and how many rating has negative to positive attribute.
-    var polarity = window.knuthShuffle(polarities.slice(0)); //randomize
+    // Randomize polarity
+    // Number of elements must match the number of qualities
+    // 1 = positive to negative; 0 = negative to positive
+    var polarities = [1,1,1,0,0,0]; 
+    var polarity = window.knuthShuffle(polarities.slice(0));
 
-    //Generate HTML for each rating with Handlebars
+    // Generate HTML for each rating with Handlebars
     var context, temp;
     var source = $("#generate-html").html();
     var template = Handlebars.compile(source);
     for (var i=1;i<(RatingPerHIT + 1);i++) {
         var inputs = [];
-        for (var j=0;j<6;j++){ // change number to the numbrer of qualities
+        
+        for (var j=0;j<6;j++){ // Upper bound of the loop should match number of qualities
             if (polarity[j]) {
                 temp = {
                     quality: ordered_qualities[j][0],
@@ -57,11 +54,13 @@ $(document).ready(function() {
                 inputs.push(jQuery.extend(true, {}, temp));
             }
         }
+
+        // Create and append the HTML
         context = {num: String(i), total: String(RatingPerHIT), audio_name: $("#audio" + String(i)).html(), rating: inputs};
         $('#last_carousel').before(template(context));
     }
-    
-    //Bootstrap Carousel Implementation
+
+    // Bootstrap Carousel implementation
     $.fn.carousel.Constructor.prototype.keydown = function () {}
     var q_counter = 0;
 
@@ -119,10 +118,8 @@ $(document).ready(function() {
     })
 
     $('#submitButton').appendTo($('div#submit-button-container'));
-////////////////////////////////////////////////////////////////////
 
-
-    // Validation for each ratings
+    // Validation for rating questions
     $('button.btn-next-tweet').click(function(e){
         e.preventDefault();
 
@@ -130,12 +127,12 @@ $(document).ready(function() {
         name_next = parseInt(name, 10);
         name_next = name_next+1;
         var validf = true;
-        // Validatoin for radio buttons for ScotusMasuline
+
+        // Check that each quality has a response
         var radio_name = "ScotusMasculine" + name;
         if(!$('input[name=' + radio_name + ']').is(':checked')) {
             validf=false;
         }
-        // Validation for radio buttons for ScotusConfident
         radio_name = "ScotusConfident" + name;
         if(!$('input[name=' + radio_name + ']').is(':checked')) {
             validf=false;
@@ -164,16 +161,16 @@ $(document).ready(function() {
         if(!$('input[name=' + radio_name + ']').is(':checked')) {
             validf=false;
         }
-        if(validf){
-            $('#tweets-carousel').carousel('next');
+
+        if(validf){ // If all questions have been answered
+            $('#tweets-carousel').carousel('next'); // Goto next question
             if(name != String(RatingPerHIT)){
                 document.getElementById("ScotusAudioID" + name_next).autoplay = true;
                 document.getElementById("ScotusAudioID" + name_next).load();
             } 
         } 
-        else {
+        else { // Wait for answers
             alert("Please complete the questions.");
         }
     });
-
 });
