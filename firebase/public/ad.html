@@ -28,7 +28,7 @@ $( document ).ready(function() {
         paramString += index + "=" + audioId;
         if(index < audio.length - 1)
             paramString += "&";
-    }
+    });
 
     // The base URL of the experiment. Must be updated if the experiment changes locations!
     var link = 'https://utoronto-scripts.firebaseapp.com/scotus_pilot_6.html';
@@ -50,9 +50,9 @@ $( document ).ready(function() {
     else { // If this is a test run, use "temp"
         link += '?workerId=temp';
 
-        $("#afterAccept").hide();
-        $("#beforeAccept").show();
-        $("#submitButton").hide();
+        $("#afterAccept").show();
+        $("#beforeAccept").hide();
+        $("#submitButton").show();
     }
 
     // Add the param string to the URL and inset it into the page
