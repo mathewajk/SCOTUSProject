@@ -6,9 +6,9 @@ $.getJSON("static/json/workerIds.json", function(json) {
 
 /* Firebase initialization */
 var config = {
-    apiKey: "AIzaSyBH6Dbghznz51BUaW_OcQNGoCB5pE2jQ9I",
-    databaseURL: "https://utoronto-scripts.firebaseio.com/",
-    storageBucket: "gs://utoronto-scripts.appspot.com"
+    apiKey: "AIzaSyAZLQJ2Ht53jjPvQjV1RD6FmSeS64c45bs",
+    databaseURL: "https://scotus-project.firebaseio.com/",
+    storageBucket: "gs://scotus-project.appspot.com"
 };
 
 firebase.initializeApp(config);
