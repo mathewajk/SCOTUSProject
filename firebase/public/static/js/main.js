@@ -17,174 +17,210 @@ firebase.initializeApp(config);
 var storage = firebase.storage();
 var storageRef = storage.ref();
 
-/* jsPsych data */
+var RatingPerHIT =66;
 
-var params = getAllUrlParams();
-var workerId = params.workerId;
-var part = params.part;
-if(workerId == undefined || workerId == "")
-    workerId = "TEST";
-if(part == undefined || part == "")
-    part = '0';
+// Below is a function required by for Unique Turker
+function turkGetParam( name ) {
+    name = name.replace(/[[]/,"\[").replace(/[]]/,"\]");
+    var regexS = "[?&]"+name+"=([^&#]*)";
+    var regex = new RegExp( regexS );
+    var results = regex.exec( window.location.href );
+    if( results == null )
+        return "";
+    else
+        return results[1];
+}
 
-var code = 'TURK' + jsPsych.randomization.randomID(10);
-var dataRef = storageRef.child('production_pilot1/' + workerId + '.csv');
-console.log("Worker ID: " + workerId + "\nCode:      " + code);
+// Below function is exceuted at run time of the html
+$(document).ready(function() {
 
+    //randomize order
+    var qualities = [["Attractive", "Very Attractive", "Very Unattractive"], ["Aggressive", "Very Aggressive", "Very Unaggressive"], ["Intelligent", "Intelligent", "Not Intelligent"], ["Masculine", "Very Masculine", "Not At All Masculine"], ["Trustworthy", "Trustworthy", "Not Trustworthy"], ["Confident", "Very Confident", "Very Timid"]]
+    var ordered_qualities = window.knuthShuffle(qualities.slice(0)); // randomize
+    //ordered_qualities = ordered_qualities.slice(1,4); // select only first 3 qualities
 
-/* Generic blocks */
+    //randomize polarity
+    var polarities = [1,1,1,0,0,0]; //Number of elements must match the number of qualities
+    //numbers of 1 and 0 decides how many rating has positive to negative and how many rating has negative to positive attribute.
+    var polarity = window.knuthShuffle(polarities.slice(0)); //randomize
 
-var welcome_block = {
-    type: "text",
-    text: '<p>Thank you for doing our study!</p><p>This study has multiple sections. Each section is only a few minutes long. In between sections, you can take short breaks if you need to, but please do not take breaks within a section. When you are ready to begin, please press the <b>space bar</b>.</p>',
-    choices: [' ']
-};
-
-/* Generic end block for the other sections */
-var end_block = {
-    type: "text",
-    choices: [' '],
-    text: "<p>You have finished this section. You can take a short break now if you want to.</p><p>Please press the <b>space bar</b> when you are ready to continue.</p>",
-    on_finish: function(data){ 
-        saveData(jsPsych.data.getDataAsCSV({record: true}), dataRef);
+    //Generate HTML for each rating with Handlebars
+    var context, temp;
+    var source = $("#generate-html").html();
+    var template = Handlebars.compile(source);
+    for (var i=1;i<(RatingPerHIT + 1);i++) {
+        var inputs = [];
+        for (var j=0;j<6;j++){ // change number to the numbrer of qualities
+            if (polarity[j]) {
+                temp = {
+                    quality: ordered_qualities[j][0],
+                    qualfier1: ordered_qualities[j][2], qualfier2: ordered_qualities[j][1],
+                    num: String(i),
+                    rate1: "1", rate2: "2", rate3: "3", rate4: "4", rate5: "5", rate6: "6", rate7: "7"
+                }
+                inputs.push(jQuery.extend(true, {}, temp));
+            }
+            else {
+                temp = {
+                    quality: ordered_qualities[j][0],
+                    num: String(i),
+                    qualfier2: ordered_qualities[j][2], qualfier1: ordered_qualities[j][1],
+                    rate1: "7", rate2: "6", rate3: "5", rate4: "4", rate5: "3", rate6: "2", rate7: "1"
+                }
+                inputs.push(jQuery.extend(true, {}, temp));
+            }
+        }
+        context = {num: String(i), total: String(RatingPerHIT), audio_name: $("#audio" + String(i)).html(), rating: inputs};
+        $('#last_carousel').before(template(context));
     }
-};
 
-var end_block_final = {
-    type: "text",
-    choices: [' '],
-    text: "<p>You have finished the final section. <p>Please press the <b>space bar</b> to proceed to the final page, where you will receive your survey code.</p>",
-    on_finish: function(data){ 
-        saveData(jsPsych.data.getDataAsCSV({record: true}), dataRef);
+    //Unique Turker Implementation
+    var ut_id = "f0b0070cc04aff49fd28cb73d09e3cdf"; //Use a new id obtained from Unique Turker for a new release
+    var assignmentId = turkGetParam('assignmentId', '');
+    if (assignmentId != '' && assignmentId != 'ASSIGNMENT_ID_NOT_AVAILABLE') {
+        var workerId = turkGetParam('workerId', '');
+        var url = '//uniqueturker.myleott.com/'+ut_id+'/'+workerId+'/'+assignmentId;
+        var request = new XMLHttpRequest();
+        request.open('GET', url, false);
+        request.send();
+        if (request.responseText != '1' && workerId != "ADKT3VGSIZR5B") { // Change this workerId to the requester's id such that the account won't be blocked during testing
+            $("#workerNotFound").hide();
+            $("#beforeAccept").hide();
+            $("#workerFound").show();
+            $("#submitButton").hide();
+        }
+        else {
+            $("#workerNotFound").show();
+            $("#beforeAccept").hide();
+            $("#workerFound").hide();
+            $("#submitButton").show();
+        }
     }
-};
-
-var end_block_practice = {
-    type: "text",
-    choices: [' '],
-    text: "<p>You have finished the practice section.</p><p>Please press the <b>space bar</b> when you are ready to continue.</p>"
-};
-
-var final_block = {
-    type: "text",
-    choices: [' '],
-    text: function(){
-        return "<p>You have finished the experiment! Your responses have been saved.</p><p>Your survey code is <b>" + code + "</b>. Please enter this code into your HIT. You may then close this window.</p><p>If you have any questions or concerns, feel free to contact the lab at <a href='mailto:phonlab@gmail.com'>phonlab@gmail.com</a>.";
+    else {
+        $("#workerNotFound").hide();
+        $("#beforeAccept").show();
+        $("#workerFound").hide();
+        $("#submitButton").hide();
     }
-}
+});
+</script><script rel="text/javascript">
 
-var audio_test_block = {
-    timeline: [{
-        type: "text",
-        choices: ['1', '0'],
-        text: '<p>The following section requires you to listen to some audio clips. ' + 
-              'Please put on your headphones now if you have not yet done so.<br/>' +
-              'You can use this audio clip to adjust your volume:</p>' + 
-              '<p><audio controls="controls" preload="auto">' + 
-              '<source src="http://hum.uchicago.edu/phonlab/MTURKTASKS/VAS/practice_be300_33.wav" type="audio/wav" />[NOT SUPPORTED]</audio></p>' +  
-              '<br/><br/><p><b>Have you put on your headphones?</b><br/>' + 
-              'Press <b>1</b> for "yes" and <b>0</b> for "no".</p>',
-        timing_post_trial: 1000
-        }],
-    loop_function: function(data){
-        if(jsPsych.pluginAPI.convertKeyCharacterToKeyCode('m') == data[0].key_press)
-            return true;
-        else 
-            return false;
-    }
-};
-
-var main_blocks;
-if(part == '1') {
-    main_blocks = [
-        {type: 'hearingTest', section: -1, practice: false, audio: true, generator: generateAudio},
-        {type: 'duration', section: -1, practice: true, audio: true, generator: generateAudio},
-        {type: 'duration', section: -1, practice: false, audio: true, generator: generateAudio},
-        {type: 'ravenA', section: -1, practice: false, audio: false, generator: generateMultichoice},
-        {type: 'frequency', section: -1, practice: true, audio: true, generator: generateAudio},
-        {type: 'frequency', section: -1, practice: false, audio: true, generator: generateAudio}
-    ];
-}
-else if(part == '2'){
-    main_blocks  = [
-        {type: 'hearingTest', section: -1, practice: false, audio: true, generator: generateAudio},
-        {type: 'AQ', section: 0, practice: false, audio: false, generator: generateLikert},
-        {type: 'cueWeighting', section: -1, practice: true, audio: true, generator: generateAudio},
-        {type: 'cueWeighting', section: 0, practice: false, audio: true, generator: generateAudio},
-        {type: 'AQ', section: 1, practice: false, audio: false, generator: generateLikert},
-        {type: 'cueWeighting', section: 1, practice: false, audio: true, generator: generateAudio},
-        {type: 'AQ', section: 2, practice: false, audio: false, generator: generateLikert},
-        {type: 'cueWeighting', section: 2, practice: false, audio: true, generator: generateAudio},
-        {type: 'AQ', section: 3, practice: false, audio: false, generator: generateLikert},
-        {type: 'cueWeighting', section: 3, practice: false, audio: true, generator: generateAudio},
-        {type: 'AQ', section: 4, practice: false, audio: false, generator: generateLikert},
-        {type: 'cueWeighting', section: 4, practice: false, audio: true, generator: generateAudio},
-        {type: 'big5', section: -1, practice: false, audio: false, generator: generateLikert}
-    ];
-}
-else {
-    main_blocks = [];
-}
-
-/* Experiment */
-
-/* Holds the experiment structure */
-var experiment_blocks = [];
-
-/* Initial statements */
-experiment_blocks.push(welcome_block);
-
-for(var i = 0; i < main_blocks.length; i++) {
-    if(main_blocks[i].audio)
-        if(i == 0 || !main_blocks[i-1].practice)
-            experiment_blocks.push(audio_test_block);
-    experiment_blocks.push(main_blocks[i].generator(main_blocks[i].type, main_blocks[i].section, main_blocks[i].practice));
-    if(main_blocks[i].practice)
-        experiment_blocks.push(end_block_practice);
-    else if(i != main_blocks.length - 1)
-        experiment_blocks.push(end_block);
-}
-
-experiment_blocks.push(end_block_final);
-experiment_blocks.push(final_block);
 
 $( document ).ready(function() {
-    $('#progress-bar').hide();
-    $('#jspsych-target').hide();
-    $('#no-consent').hide();
-    $('#demographics').hide();
-    $('#consent').hide();
+    //Bootstrap Carousel Implementation No need to
+///////////////////////////////////////////////////////////////////////////// 
+    $.fn.carousel.Constructor.prototype.keydown = function () {}
+    var q_counter = 0;
 
-    $('button.browser').click(function(e){
-        e.preventDefault();
-        $('#browser').hide();
-        $('#consent').show();
+    $('input[type=radio]').change(function(){ 
+        var name = $(this).attr('name');
+        var new_value = $(this).val();
+        var select = $('select#' + name);
+        select.val(new_value);
     });
 
-    $('button.no-consent').click(function(e){
-        e.preventDefault();
-        $('#consent').hide();
-        $('#no-consent').show();
+    $('#tweets-carousel').on('slide.bs.carousel', function (e) {
+        var current_slide = $(e.relatedTarget);
+        var next_button = current_slide.find('button:first');
+        var timeout_length = current_slide.data('timeout-length');
+        if(!timeout_length){ var timeout_length = 17000};
+
+            setTimeout(function(){
+                // Change button class.
+                next_button.removeClass('btn-disabled').addClass('btn-success');
+                // Undisable.
+                next_button.removeAttr('disabled');
+            }, timeout_length);
     });
 
-    $('button.consent').click(function(e) {
+    $('button.btn-next-profile').click(function(e){
         e.preventDefault();
 
-        $('#consent').hide();
-        $('#header').hide();
-        $('#progress-bar').show();
-        $('#jspsych-target').show();
+        var select_boxes = $('#profile').find('select');
+        var valid = true;
 
-        /* Initialize experiment */
-        jsPsych.init({
-            timeline: experiment_blocks,
-            show_progress_bar: true,
-        });
+        select_boxes.each(function(){
+            if($(this).val() == ""){
+                valid = false;
+            }
+        })
 
-        /* Append data */
-        jsPsych.data.addProperties({
-            workerId: workerId,
-            code: code
-        });
+        if(valid){
+            $('#tweets-carousel').carousel('next'); 
+        } 
+        else {
+            alert("Please choose an option for each question before continuing.");
+        }           
     });
+
+    $('button.btn-next-instruction').click(function(e){
+        e.preventDefault();
+        $('#tweets-carousel').carousel('next');
+        document.getElementById("ScotusAudioID1").autoplay = true;
+        document.getElementById("ScotusAudioID1").load();
+    })
+
+    $('button.btn-next-carousel').click(function(e){
+        e.preventDefault();
+        $('#tweets-carousel').carousel('next');
+    })
+
+    $('#submitButton').appendTo($('div#submit-button-container'));
+////////////////////////////////////////////////////////////////////
+
+
+    // Validation for each ratings
+    $('button.btn-next-tweet').click(function(e){
+        e.preventDefault();
+
+        var name = $(this).attr('name');
+        name_next = parseInt(name, 10);
+        name_next = name_next+1;
+        var validf = true;
+        // Validatoin for radio buttons for ScotusMasuline
+        var radio_name = "ScotusMasculine" + name;
+        if(!$('input[name=' + radio_name + ']').is(':checked')) {
+            validf=false;
+        }
+        // Validation for radio buttons for ScotusConfident
+        radio_name = "ScotusConfident" + name;
+        if(!$('input[name=' + radio_name + ']').is(':checked')) {
+            validf=false;
+        }
+        radio_name = "ScotusAttractive" + name;
+        if(!$('input[name=' + radio_name + ']').is(':checked')) {
+            validf=false;
+        }
+        radio_name = "ScotusAggressive" + name;
+        if(!$('input[name=' + radio_name + ']').is(':checked')) {
+            validf=false;
+        }
+        radio_name = "ScotusIntelligent" + name;
+        if(!$('input[name=' + radio_name + ']').is(':checked')) {
+            validf=false;
+        }
+        radio_name = "ScotusTrustworthy" + name;
+        if(!$('input[name=' + radio_name + ']').is(':checked')) {
+            validf=false;
+        }
+        radio_name = "ScotusWin" + name;
+        if(!$('input[name=' + radio_name + ']').is(':checked')) {
+            validf=false;
+        }
+        radio_name = "ScotusQuality" + name;
+        if(!$('input[name=' + radio_name + ']').is(':checked')) {
+            validf=false;
+        }
+        if(validf){
+            $('#tweets-carousel').carousel('next');
+            if(name != String(RatingPerHIT)){
+                document.getElementById("ScotusAudioID" + name_next).autoplay = true;
+                document.getElementById("ScotusAudioID" + name_next).load();
+            } 
+        } 
+        else {
+            alert("Please complete the questions.");
+        }
+    });
+
 });
