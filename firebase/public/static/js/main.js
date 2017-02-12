@@ -36,7 +36,6 @@ $(document).ready(function() {
 
     var surveyCode = guid();
     $("#insert-code").html('TURK' + surveyCode);
-
     dataHeader += ',SurveyCode';
     sharedData += ',' + surveyCode;
 
