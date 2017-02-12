@@ -138,7 +138,7 @@ $(document).ready(function() {
             if(currentQuestion % 11 == 0) { // Save data every 1/6 of the way
                 saveData(fullData, dataRef);
                 if(currentQuestion == 66) { // If they're done, add them to the database
-                    addWorker(workerId, 1);
+                    addWorker(params.workerId, 1);
                 }
             }
 
