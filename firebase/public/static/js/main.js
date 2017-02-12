@@ -16,11 +16,11 @@ var storageRef = firebase.storage().ref();
 var database = firebase.database();
 
 var params = getAllUrlParams();
+var surveyCode = guid();
 
 // Hold/format response data
-var dataHeader = 'WorkerId';
-var sharedData = params.workerId;
-var fullData = "";
+var subjectData = []
+var sharedData = {'workerId': params.workerId, 'surveyCode': surveyCode};
 
 // Reference for saving CSV
 var dataRef = storageRef.child('testing' + params.workerId + '.csv');
@@ -33,11 +33,7 @@ $(document).ready(function() {
         $('#error').show();
         return 0;
     }
-
-    var surveyCode = guid();
     $("#insert-code").html('TURK' + surveyCode);
-    dataHeader += ',SurveyCode';
-    sharedData += ',' + surveyCode;
 
     // Generate HTML
     generateQuestions(qualities, polarities, params);
@@ -53,15 +49,6 @@ $(document).ready(function() {
         $('#tweets-carousel').carousel('next');
         document.getElementById("ScotusAudioID1").autoplay = true;
         document.getElementById("ScotusAudioID1").load();
-
-        dataHeader += ',TrialIndex';
-        _.each(qualityLabels, function(label) {
-          dataHeader += ',' + label;
-        });
-        dataHeader += '\n';
-        fullData += dataHeader;
-
-        saveData(fullData, dataRef);
     });
 
     $('button.btn-next-profile').click(function(e) {
@@ -78,8 +65,7 @@ $(document).ready(function() {
 
         if(valid){
             _.each(select_boxes, function (box) {
-                    dataHeader += ',' + $(box).attr("id");
-                    sharedData += ',' + $(box).val();
+                sharedData[$(box).attr("id")] = $(box).val();
             });
             $('#tweets-carousel').carousel('next'); 
         } 
@@ -116,27 +102,29 @@ $(document).ready(function() {
     $('button.btn-next-tweet').click(function(e){
         e.preventDefault();
 
+        // Add our shared data to the line
+        var trialData = {}
+        _.each(sharedData, function(value, key) {
+            trialData[key] = value;
+        });
+
         var buttonName = $(this).attr('name');
-        currentQuestion = parseInt(buttonName, 10);
-        nextQuestion = currentQuestion+1;
+        var currentQuestion = parseInt(buttonName, 10);
+        var nextQuestion = currentQuestion + 1;
 
         var validf = true;
         _.each(qualityLabels, function(label) {
             var radio_name = label + buttonName;
             if(!$('input[name=' + radio_name + ']').is(':checked'))
                 validf=false;
+            else
+                trialData[label] = $('input[name=' + radio_name + ']:checked').val();
         });
 
         if(validf){ // If all questions have been answered
-            var trialData = ',' + currentQuestion;
-            _.each(qualityLabels, function(label) {
-                var radio_name = label + buttonName;
-                trialData += ',' + $('input[name=' + radio_name + ']:checked').val();
-            });
-            fullData += sharedData + trialData + '\n';
-
-            if(currentQuestion % 11 == 0) { // Save data every 1/6 of the way
-                saveData(fullData, dataRef);
+            subjectData.push(trialData);
+            if(currentQuestion % 11 == 0 || currentQuestion == 1) { // Save data every 1/6 of the way
+                saveData(objArrayToCSV({data: subjectData}), dataRef);
                 if(currentQuestion == 66) { // If they're done, add them to the database
                     addWorker(params.workerId, 1);
                 }
