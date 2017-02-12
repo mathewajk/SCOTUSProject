@@ -35,7 +35,10 @@ $(document).ready(function() {
     }
 
     var surveyCode = guid();
-    $("#insert-code").html('TURK' + surveyCode);;
+    $("#insert-code").html('TURK' + surveyCode);
+
+    dataHeader += ',SurveyCode';
+    sharedData += ',' + surveyCode;
 
     // Generate HTML
     generateQuestions(qualities, polarities, params);
