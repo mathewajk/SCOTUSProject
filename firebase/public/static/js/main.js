@@ -102,15 +102,19 @@ $(document).ready(function() {
     $('button.btn-next-tweet').click(function(e){
         e.preventDefault();
 
+        var buttonName = $(this).attr('name');
+        var currentQuestion = parseInt(buttonName, 10);
+        var nextQuestion = currentQuestion + 1;
+
         // Add our shared data to the line
         var trialData = {}
         _.each(sharedData, function(value, key) {
             trialData[key] = value;
         });
 
-        var buttonName = $(this).attr('name');
-        var currentQuestion = parseInt(buttonName, 10);
-        var nextQuestion = currentQuestion + 1;
+        // Record trial number and audio name
+        trialData['trialPos'] = currentQuestion;
+        trialData['audioName'] = $('#ScotusAudio' + currentQuestion).html();
 
         var validf = true;
         _.each(qualityLabels, function(label) {
