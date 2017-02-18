@@ -135,7 +135,7 @@ $(document).ready(function() {
             }
 
             $('#tweets-carousel').carousel('next'); // Goto next question
-            if(name != String(RatingPerHIT)){
+            if(buttonName != String(RatingPerHIT)){
                 document.getElementById("ScotusAudioID" + nextQuestion).autoplay = true;
                 document.getElementById("ScotusAudioID" + nextQuestion).load();
             }
