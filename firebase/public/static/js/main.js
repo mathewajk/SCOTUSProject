@@ -127,7 +127,7 @@ $(document).ready(function() {
 
         if(validf){ // If all questions have been answered
             subjectData.push(trialData);
-            if(currentQuestion % 11 == 0 || currentQuestion == 1) { // Save data every 1/6 of the way
+            if(currentQuestion % 22 == 0 || currentQuestion == 1) { // Save data every 1/3 of the way
                 saveData(objArrayToCSV({data: subjectData}), dataRef);
                 if(currentQuestion == 66) { // If they're done, add them to the database
                     addWorker(params.workerId, 1);
