@@ -73,7 +73,7 @@ The following changes can be made with minimal changes to the code
                 <div class="panel-heading">Recording {{num}} of {{total}}</div>
 
                 <div class="panel-body">
-                    <p  align="center"><audio controls="controls" id="ScotusAudioID{{num}}" preload="auto"><source src="http://128.100.177.31/public/{{audio_name}}" type="audio/wav" /></audio></p>
+                    <p  align="center"><audio controls="controls" id="ScotusAudioID{{num}}" preload="auto"><source src="http://128.100.177.31/public/Processed Audios/{{audio_name}}" type="audio/wav" /></audio></p>
                     <p><br/>1. Please provide your impression of the voice recording in the matrix below:</p>
                     <table align="center">
                         <tbody>
@@ -114,26 +114,35 @@ The following changes can be made with minimal changes to the code
         <title>Speech Rating Study</title>
     </head>
     <body>
-        <div class="panel panel-body centered" id="header">
-                <img class="logo" src="https://communications.uchicago.edu/sites/all/files/identity/logo/jpg/UC-Shield-fall-2012.jpg" alt="UChicago Logo" width="100"/>
+
+        <div id="error" class="centered" style="display:none">     
+    	
+	<img class="logo" src="https://communications.uchicago.edu/sites/all/files/identity/logo/jpg/UC-Shield-fall-2012.jpg" alt="UChicago Logo" width="100"/>
             
                 <h4 class="header">Phonology Laboratory, Department of Linguistics, The University of Chicago</h4>
+	
+	<p>It appears that you have previously completed a study from the Phonology Lab that used the same data as, or similar data to, the study you are attempting to complete now. Unfortunately, we cannot allow the same person to participate in an experiment more than once. We apologize for the inconvenience, but we must ask that you return your HIT now. (This will not negatively impact your ability to participate in future experiments.)</p><p>If you believe that this message is in error, you can contact the lab at <a href="mailto:phonlab@gmail.com">phonlab@gmail.com</a>, and we will do our best to resolve the situation.</p>
         </div>
 
-        <div id="error" class="centered" style="display:none">
-            <p>It appears that you have previously completed a study from the Phonology Lab that used the same data as, or similar data to, the study you are attempting to complete now. Unfortunately, we cannot allow the same person to participate in an experiment more than once. We apologize for the inconvenience, but we must ask that you return your HIT now. (This will not negatively impact your ability to participate in future experiments.)</p><p>If you believe that this message is in error, you can contact the lab at <a href="mailto:phonlab@gmail.com">phonlab@gmail.com</a>, and we will do our best to resolve the situation.</p>
-        </div>
 
-
-        <div id="no-consent" style="display:none">
-            <div class="panel panel-body centered">
+        <div id="no-consent" class="centered" style="display:none">
+            
+	    <img class="logo" src="https://communications.uchicago.edu/sites/all/files/identity/logo/jpg/UC-Shield-fall-2012.jpg" alt="UChicago Logo" width="100"/>
+            
+                <h4 class="header">Phonology Laboratory, Department of Linguistics, The University of Chicago</h4>
+	    <div class="panel panel-body centered">
                 Thanks for your interest! We're sorry this study wasn't for you. You may close this window and return the HIT.
             </div>
         </div>
 
         <div id="browser">
             <div class="panel panel-body centered">
-                Thank you for your interest in our study! <br/><br/> As a reminder, this study runs best in <b>Chrome</b> or <b>Firefox</b>. If you are not using one of these browers, we recommend switching now to avoid future issues. When you are ready, please proceed via the button below.
+
+		<img class="logo" src="https://communications.uchicago.edu/sites/all/files/identity/logo/jpg/UC-Shield-fall-2012.jpg" alt="UChicago Logo" width="100"/>
+            
+                <h4 class="header">Phonology Laboratory, Department of Linguistics, The University of Chicago</h4>   
+               
+		 Thank you for your interest in our study! <br/><br/> As a reminder, this study runs best in <b>Chrome</b> or <b>Firefox</b>. If you are not using one of these browers, we recommend switching now to avoid future issues. When you are ready, please proceed via the button below.
                 <br/><br/>
                 <button type="button" class="btn btn-success browser">
                     Continue
@@ -181,7 +190,7 @@ The following changes can be made with minimal changes to the code
 
                 <h4>Compensation</h4>
 
-                <p>You will receive $3 for your participation in this study.</p>
+                <p>You will receive $2.50 for your participation in this study.</p>
 
                 <br/>
 
