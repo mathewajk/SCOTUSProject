@@ -23,7 +23,7 @@ var subjectData = []
 var sharedData = {'workerId': params.workerId, 'surveyCode': surveyCode};
 
 // Reference for saving CSV
-var dataRef = storageRef.child('3-7-2017-run1/' + params.workerId + '.csv');
+var dataRef = storageRef.child('3-13-2017-run1/' + params.workerId + '.csv');
 
 // Function below is executed at run time of the HTML
 $(document).ready(function() {
@@ -127,9 +127,9 @@ $(document).ready(function() {
 
         if(validf){ // If all questions have been answered
             subjectData.push(trialData);
-            if(currentQuestion % 22 == 0 || currentQuestion == 1) { // Save data every 1/3 of the way
+            if(currentQuestion % 10 == 0 || currentQuestion == 1) { // Save data every 1/2 of the way
                 saveData(objArrayToCSV({data: subjectData}), dataRef);
-                if(currentQuestion == 66) { // If they're done, add them to the database
+                if(currentQuestion == 20) { // If they're done, add them to the database
                     addWorker(params.workerId, 1);
                 }
             }
