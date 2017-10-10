@@ -63,6 +63,12 @@ $(document).ready(function() {
             }
         })
 
+        var birthYear = $('#ProfileYear').val();
+        if(birthYear === '2000 or later' || birthYear === '1975 or earlier') {
+          $('#tweets-carousel').hide();
+          $('#demographic-error').show();
+        }
+
         if(valid){
             _.each(select_boxes, function (box) {
                 sharedData[$(box).attr("id")] = $(box).val();
@@ -71,7 +77,7 @@ $(document).ready(function() {
             $('#tweets-carousel').carousel('next');
         }
         else {
-               alert("Please choose an option for each question before continuing.");
+            alert("Please choose an option for each question before continuing.");
         }
     });
 
