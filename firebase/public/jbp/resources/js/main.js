@@ -7,8 +7,8 @@
 // Firebase params
 var config = {
     apiKey: "AIzaSyAZLQJ2Ht53jjPvQjV1RD6FmSeS64c45bs",
-    databaseURL: "https://scotus-project.firebaseio.com/",
-    storageBucket: "gs://scotus-project.appspot.com"
+    databaseURL: "https://SRP-project.firebaseio.com/",
+    storageBucket: "gs://SRP-project.appspot.com"
 };
 firebase.initializeApp(config);
 
@@ -47,8 +47,8 @@ $(document).ready(function() {
         e.preventDefault();
 
         $('#tweets-carousel').carousel('next');
-        document.getElementById("ScotusAudioID1").autoplay = true;
-        document.getElementById("ScotusAudioID1").load();
+        document.getElementById("SRPAudioID1").autoplay = true;
+        document.getElementById("SRPAudioID1").load();
     });
 
     $('button.btn-next-profile').click(function(e) {
@@ -116,7 +116,7 @@ $(document).ready(function() {
 
         // Record trial number and audio name
         trialData['trialPos'] = currentQuestion;
-        trialData['audioName'] = $('#ScotusAudio' + currentQuestion).html();
+        trialData['audioName'] = $('#SRPAudio' + currentQuestion).html();
 
         var validf = true;
         _.each(qualityLabels, function(label) {
@@ -138,8 +138,8 @@ $(document).ready(function() {
 
             $('#tweets-carousel').carousel('next'); // Goto next question
             if(buttonName != String(RatingPerHIT)){
-                document.getElementById("ScotusAudioID" + nextQuestion).autoplay = true;
-                document.getElementById("ScotusAudioID" + nextQuestion).load();
+                document.getElementById("SRPAudioID" + nextQuestion).autoplay = true;
+                document.getElementById("SRPAudioID" + nextQuestion).load();
             }
         }
         else { // Wait for answers

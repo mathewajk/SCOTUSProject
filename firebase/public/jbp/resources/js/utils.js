@@ -188,7 +188,7 @@ function generateQuestions(qualities, polarities, params) {
     for (var i=1;i<(RatingPerHIT + 1);i++) {
         var inputs = [];
 
-        for (var j=0;j<6;j++){ // Upper bound of the loop should match number of qualities
+        for (var j=0;j<7;j++){ // Upper bound of the loop should match number of qualities
             if (ordered_polarities[j]) {
                 temp = {
                     quality: ordered_qualities[j][0],

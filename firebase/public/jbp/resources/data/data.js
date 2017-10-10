@@ -1,13 +1,15 @@
 var qualities = [["Attractive", "Very Attractive", "Very Unattractive"], 
-                     ["Aggressive", "Very Aggressive", "Very Unaggressive"], 
                      ["Intelligent", "Intelligent", "Not Intelligent"], 
                      ["Masculine", "Very Masculine", "Not At All Masculine"], 
-                     ["Trustworthy", "Trustworthy", "Not Trustworthy"], 
-                     ["Confident", "Very Confident", "Very Timid"]];
-var polarities = [1,1,1,0,0,0];
+                     ["Casual", "Casual", "Formal"], 
+                     ["Outgoing", "Very Outgoing", "Very Shy"],
+                     ["Homosexual", "Very Homosexual", "Very Heterosexual"],
+                     ["Friendly", "Friendly", "Unfriendly"],
+                     ];
+var polarities = [1,1,1,1,0,0,0];
 
-var qualityLabels = ["ScotusMasculine", "ScotusConfident", "ScotusAttractive", 
-                     "ScotusAggressive", "ScotusIntelligent", "ScotusTrustworthy", 
-                     "ScotusWin", "ScotusQuality"];
+var qualityLabels = ["SRPAttractive", "SRPIntelligent", "SRPMasculine", 
+                     "SRPCasual", "SRPOutgoing", "SRPHomosexual", 
+                     "SRPFriendly"];
     
 var RatingPerHIT = 20;

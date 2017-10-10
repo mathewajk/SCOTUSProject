@@ -2,7 +2,7 @@
 <meta charset="UTF-8">
 
 <!--
-Scotus Mturk Experiment Code
+SRP Mturk Experiment Code
 -Dennis Luo updated 19/12/2015
 
 General Experiment Setup process
@@ -82,41 +82,90 @@ The following changes can be made with minimal changes to the code
           <div class="card-header">Recording {{num}} of {{total}}</div>
 
           <div class="card-body">
-              <p  align="center"><audio controls="controls" id="ScotusAudioID{{num}}" preload="auto"><source src="http://128.100.177.31/public/{{audio_name}}" type="audio/wav" /></audio></p>
-              <p><br/>1. Please provide your impression of the voice recording in the matrix below:</p>
+              <p  align="center"><audio controls="controls" id="SRPAudioID{{num}}" preload="auto"><source src="http://128.100.177.31/public/{{audio_name}}" type="audio/wav" /></audio></p>
+              <p><br/>1. Please provide your impression of the speaker in the matrix below:</p>
               <table align="center">
                   <tbody>
                   {{#each rating}}
                   <tr>
                       <td style="width: 130px; height: 25px;">{{qualfier1}}</td>
-                      <td style="height: 25px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name="Scotus{{quality}}{{num}}" type="radio" value="{{rate1}}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name="Scotus{{quality}}{{num}}" type="radio" value="{{rate2}}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name="Scotus{{quality}}{{num}}" type="radio" value="{{rate3}}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input name="Scotus{{quality}}{{num}}" type="radio" value="{{rate4}}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input name="Scotus{{quality}}{{num}}" type="radio" value="{{rate5}}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input name="Scotus{{quality}}{{num}}" type="radio" value="{{rate6}}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input name="Scotus{{quality}}{{num}}" type="radio" value="{{rate7}}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                      <td style="height: 25px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input name="SRP{{quality}}{{num}}" type="radio" value="{{rate1}}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input name="SRP{{quality}}{{num}}" type="radio" value="{{rate2}}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input name="SRP{{quality}}{{num}}" type="radio" value="{{rate3}}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                        <input name="SRP{{quality}}{{num}}" type="radio" value="{{rate4}}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                        <input name="SRP{{quality}}{{num}}" type="radio" value="{{rate5}}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                        <input name="SRP{{quality}}{{num}}" type="radio" value="{{rate6}}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                        <input name="SRP{{quality}}{{num}}" type="radio" value="{{rate7}}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      </td>
                       <td>{{qualfier2}}</td>
                   </tr>
                   {{/each}}
                   </tbody>
               </table>
-              <p><br/>2. Assuming that this is a lawyer arguing a case in front of a panel of judges, how likely do you think this lawyer will win the case?</p>
-              <table align="center">
+              <p><br/>2. Where does it sound like the speaker might be from (check all that apply, must choose at least one from each grouping)?</p>
+             <table align="center">
                   <tbody>
-                      <tr>
-                          <td>Will Definitely Lose</td>
-                          <td>&nbsp;&nbsp;<input name="ScotusWin{{num}}"  type="radio" value="1" />--<input name="ScotusWin{{num}}"  type="radio" value="2" />--<input name="ScotusWin{{num}}"  type="radio" value="3" />--<input name="ScotusWin{{num}}"  type="radio" value="4" />--<input name="ScotusWin{{num}}"  type="radio" value="5" />--<input name="ScotusWin{{num}}"  type="radio" value="6" />--<input name="ScotusWin{{num}}"  type="radio" value="7" />&nbsp;&nbsp;</td>
-                          <td>Will Definitely Win</td>
-                      </tr>
+                  <tr>
+                      <td style="height: 25px;">
+                      <input name="checkbox1" type="checkbox" value="South" />
+                      <td style="width: 130px; height: 25px;">The South</td>
+                      <td style="height: 25px;">
+                      <input name="checkbox2" type="checkbox" value="North" />
+                      <td style="width: 130px; height: 25px;">The North</td>
+                      <td style="height: 25px;">
+                      <input name="checkbox3" type="checkbox" value="Midwest" />
+                      <td style="width: 130px; height: 25px;">The Midwest</td>
+                  </tr>
+                  <tr>
+                      <td style="height: 25px;">
+                      <input name="checkbox4" type="checkbox" value="Southwest" />
+                      <td style="width: 130px; height: 25px;">The Southwest</td>
+                      <td style="height: 25px;">
+                      <input name="checkbox5" type="checkbox" value="West" />
+                      <td style="width: 150px; height: 25px;">The West Coast</td>
+                      <td style="height: 25px;">
+                      <input name="checkbox6" type="checkbox" value="East" />
+                      <td style="width: 150px; height: 25px;">The East Coast</td>
+                  </tr>
+                  <tr>
+                      <td style="height: 25px;">
+                      <input name="checkbox7" type="checkbox" value="Anywhere" />
+                      <td style="width: 130px; height: 25px;">Anywhere</td>
+                  </tr>
+                  <tr>
+                    <td style="height: 25px;"></td>
+                  </tr>
+                  <tr>
+                      <td style="height: 25px;">
+                      <input name="checkbox8" type="checkbox" value="Urban" />
+                      <td style="width: 130px; height: 25px;">The City</td>
+                      <td style="height: 25px;">
+                      <input name="checkbox9" type="checkbox" value="Rural" />
+                      <td style="width: 130px; height: 25px;">The Country</td>
+                      <td style="height: 25px;">
+                      <input name="checkbox10" type="checkbox" value="Suburban" />
+                      <td style="width: 130px; height: 25px;">The Suburbs</td>
+                  </tr>
+                  <tr>
+                    <td style="height: 25px;"></td>
+                  </tr>
+                  <tr>
+                      <td style="height: 25px;">
+                      <input name="checkbox11" type="checkbox" value="Rich" />
+                      <td style="width: 130px; height: 25px;">A Wealthy Background</td>
+                      <td style="height: 25px;">
+                      <input name="checkbox12" type="checkbox" value="Middleclass" />
+                      <td style="width: 130px; height: 25px;">A Middle-Class Background</td>
+                      <td style="height: 25px;">
+                      <input name="checkbox13" type="checkbox" value="Working" />
+                      <td style="width: 130px; height: 25px;">A Working-Class Background</td>
+                  </tr>
                   </tbody>
               </table>
-              <p><br/>3. How good is the quality of the recording?</p>
-              <table align="center">
-                  <tbody>
-                      <tr>
-                          <td>Very Bad</td>
-                          <td>&nbsp;&nbsp;<input name="ScotusQuality{{num}}"  type="radio" value="1" />--<input name="ScotusQuality{{num}}"  type="radio" value="2" />--<input name="ScotusQuality{{num}}"  type="radio" value="3" />--<input name="ScotusQuality{{num}}"  type="radio" value="4" />--<input name="ScotusQuality{{num}}"  type="radio" value="5" />--<input name="ScotusQuality{{num}}"  type="radio" value="6" />--<input name="ScotusQuality{{num}}"  type="radio" value="7" />&nbsp;&nbsp;</td>
-                          <td>Very Good</td>
-                      </tr>
-                  </tbody>
-              </table>
+
           </div>
-          <div id="ScotusAudio{{num}}" style="display: none;">{{audio_name}}</div>
+          <div id="SRPAudio{{num}}" style="display: none;">{{audio_name}}</div>
           <div class="card-footer" style="text-align: center;"><button class="btn btn-dark btn-next-tweet" name="{{num}}">Next</button></div>
       </div>
     </div>
@@ -136,7 +185,7 @@ The following changes can be made with minimal changes to the code
     </div>
   </div>
 
-   <p>It appears that you have previously completed a study from the Phonology Lab that used the same data as, or similar data to, the study you are attempting to complete now. Unfortunately, we cannot allow the same person to participate in an experiment more than once. We apologize for the inconvenience, but we must ask that you return your HIT now. (This will not negatively impact your ability to participate in future experiments.)</p><p>If you believe that this message is in error, you can contact the lab at <a href="mailto:phonlab.scotus@gmail.com">phonlab.scotus@gmail.com</a>, and we will do our best to resolve the situation.</p>
+   <p>It appears that you have previously completed a study from the Phonology Lab that used the same data as, or similar data to, the study you are attempting to complete now. Unfortunately, we cannot allow the same person to participate in an experiment more than once. We apologize for the inconvenience, but we must ask that you return your HIT now. (This will not negatively impact your ability to participate in future experiments.)</p><p>If you believe that this message is in error, you can contact the lab at <a href="mailto:phonlab@gmail.com">phonlab@gmail.com</a>, and we will do our best to resolve the situation.</p>
 </div>
 
 <div id="no-consent" style="display:none">
@@ -191,6 +240,9 @@ The following changes can be made with minimal changes to the code
 	<h4 class="mt-4">Introduction</h4>
   <p>The Department of Linguistics at the University of Chicago is carrying out a research study on speech habits of English speakers. The researcher is Dr. Alan Yu (Professor of Linguistics). You are invited to take part in this research study. Before you decide to be a part of this study, you need to understand the risks and benefits. This consent form provides information about the research study. This process is known as informed consent. Your decision to take part in the study is voluntary. You are free to choose whether to take part in the study.</p>
 
+  <h4 class="mt-4">Eligibility</h4>
+  <p>We invite <b> native speakers of North American English </b> to participate in this study, meaning you have lived in the USA or Canada since early childhood. Additionally, to be elligible you must be between the ages of <b>18-40</b>.</p>
+
   <h4 class="mt-4">Participant involvement</h4>
   <p>The study is conducted over the online platform Amazon Mechanical Turk in a 20-minute session. Within the session, you will be asked to participate in a series of speech and language processing tasks and to fill out a set of questionnaires. You can terminate the experiment at any time. Withdrawing from the study will not result in any negative consequences for you.</p>
 
@@ -207,7 +259,7 @@ The following changes can be made with minimal changes to the code
   <p>You will receive $1.00 for your participation in this study.</p>
 
 	<h4 class="mt-4">Contact information</h4>
-  <p>If you have questions at any time about the study, the procedures, or your rights as a participant, you may contact the researcher at 1115 E. 58th Street, Chicago, IL 60637 or contact the lab team at <a href="mailto:phonlab.scotus@gmail.com">phonlab.scotus@gmail.com</a>. If you have questions regarding your rights as a participant, you may contact the Institutional Review Board at 773-834-7835 or sbsirbwise@listhost.uchicago.edu.</p>
+  <p>If you have questions at any time about the study, the procedures, or your rights as a participant, you may contact the researcher at 1115 E. 58th Street, Chicago, IL 60637 or contact the lab team at <a href="mailto:phonlab@gmail.com">phonlab@gmail.com</a>. If you have questions regarding your rights as a participant, you may contact the Institutional Review Board at 773-834-7835 or sbsirbwise@listhost.uchicago.edu.</p>
 
 	<h4 class="mt-4">Participation</h4>
   <p>Your participation in this study is voluntary; you may decline to participate without penalty. If you decide to participate, you may withdraw from the study at any time without penalty and without loss of benefits to which you are otherwise entitled. If you withdraw from the study before data collection is completed your data will be returned to you or destroyed.</p>
@@ -220,7 +272,7 @@ The following changes can be made with minimal changes to the code
   <div class="footer">
     <p class="text-center">
       <b>
-        By participating in this experiment, I confirm that I am fluent in English and at least 18 years old,
+        By participating in this experiment, I confirm that I am a native speaker of North American English  and at least 18 years old,
         and I understand the purpose of the research, the study procedures that I will undergo, and the possible risks and discomforts as well as benefits that I may experience.
         I have read and I understand these terms of consent. Therefore, I agree to give my consent to participate as a subject in this research project.
       </b>
@@ -260,29 +312,46 @@ The following changes can be made with minimal changes to the code
               <tbody>
                 <tr>
                   <th style="text-align: right;">Year of birth:</th>
-                  <td><select id="ProfileYear" name="ProfileYear"><option value="">Please select an option.</option><option>1996</option><option>1995</option><option>1994</option><option>1993</option><option>1992</option><option>1991</option><option>1990</option><option>1989</option><option>1988</option><option>1987</option><option>1986</option><option>1985</option><option>1984</option><option>1983</option><option>1982</option><option>1981</option><option>1980</option><option>1979</option><option>1978</option><option>1977</option><option>1976</option><option>1975</option><option>1974</option><option>1973</option><option>1972</option><option>1971</option><option>1970</option><option>1969</option><option>1968</option><option>1967</option><option>1966</option><option>1965</option><option>1964</option><option>1963</option><option>1962</option><option>1961</option><option>1960</option><option>1959</option><option>1958</option><option>1957</option><option>1956</option><option>1955</option><option>1954</option><option>1953</option><option>1952</option><option>1951</option><option>1950</option><option>1949</option><option>1948</option><option>1947</option><option>1946</option><option>1945</option><option>1944</option><option>1943</option><option>1942</option><option>1941</option><option>1940</option><option>1939</option><option>1938</option><option>1937</option><option>1936</option><option>1935</option><option>1934</option><option>1933</option><option>1932</option><option>1931</option><option>1930</option><option>1929</option><option>1928</option><option>1927</option><option>1926</option><option>1925</option><option>1924</option><option>1923</option><option>1922</option><option>1921</option><option>1920</option><option>1919</option><option>1918</option><option>1917</option><option>1916</option><option>1915</option><option>1914</option><option value="N/A"></option> </select></td>
+                  <td><select id="ProfileYear" name="ProfileYear"><option value="">Please select an option.</option><option>2000 or later</option></option><option>1999</option></option><option>1998</option></option><option>1997</option></option><option>1996</option><option>1995</option><option>1994</option><option>1993</option><option>1992</option><option>1991</option><option>1990</option><option>1989</option><option>1988</option><option>1987</option><option>1986</option><option>1985</option><option>1984</option><option>1983</option><option>1982</option><option>1981</option><option>1980</option><option>1979</option><option>1978</option><option>1977</option><option>1976</option><option>1975 or earlier</option></option><option value="N/A"></option> </select></td>
                 </tr>
                 <tr>
                   <th style="text-align: right;">Gender:</th>
-                  <td><select id="ProfileGender" name="ProfileGender"><option value="">Please select an option.</option><option>Male</option><option>Female</option><option value="N/A"></option> </select></td>
+                  <td><select id="ProfileGender" name="ProfileGender"><option value="">Please select an option.</option><option>Male</option><option>Female</option><option>Other</option><option value="N/A"></option> </select></td>
                 </tr>
+                <tr>
+                  <th style="text-align: right;">Sexual orientation:</th>
+                  <td><select id="ProfileSexuality" name="ProfileSexuality"><option value="">Please select an option.</option><option>Straight or heterosexual</option><option>Gay, lesbian or homosexual</option><option>Bisexual</option></option><option>Other</option><option value="N/A"></option> </select></td>
+                </tr>
+                <tr>
+                  <th style="text-align: right;">Childhood state*:</th>
+                  <td><select id="ProfileStateChild" name="ProfileStateChild"><option value="">Please select an option.</option><option>Alabama</option><option>Alaska</option><option>Arizona</option><option>Arkansas</option><option>California</option><option>Colorado</option><option>Connecticut</option><option>Delaware</option><option>District of Columbia</option><option>Florida</option><option>Georgia</option><option>Hawaii</option><option>Idaho</option><option>Illinois</option><option>Indiana</option><option>Iowa</option><option>Kansas</option><option>Kentucky</option><option>Louisiana</option><option>Maine</option><option>Maryland</option><option>Massachusetts</option><option>Michigan</option><option>Minnesota</option><option>Mississippi</option><option>Missouri</option><option>Montana</option><option>Nebraska</option><option>Nevada</option><option>New Hampshire</option><option>New Jersey</option><option>New Mexico</option><option>New York</option><option>North Carolina</option><option>North Dakota</option><option>Ohio</option><option>Oklahoma</option><option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option><option>South Carolina</option><option>South Dakota</option><option>Tennessee</option><option>Texas</option><option>Utah</option><option>Vermont</option><option>Virginia</option><option>Washington</option><option>West Virginia</option><option>Wisconsin</option><option>Wyoming</option> </select></td>
+               </tr>
+              <tr>
+                 <th style="text-align: right;">Childhood environment*:</th>
+                 <td><select id="ProfileEnivironmentChild" name="ProfileEnivironmentChild"><option value="">Please select an option.</option><option>Urban</option><option>Suburban</option><option>Rural</option></select></td>
+               </tr>
                 <tr>
                   <th style="text-align: right;">Current state of residence:</th>
                   <td><select id="ProfileState" name="ProfileState"><option value="">Please select an option.</option><option>Alabama</option><option>Alaska</option><option>Arizona</option><option>Arkansas</option><option>California</option><option>Colorado</option><option>Connecticut</option><option>Delaware</option><option>District of Columbia</option><option>Florida</option><option>Georgia</option><option>Hawaii</option><option>Idaho</option><option>Illinois</option><option>Indiana</option><option>Iowa</option><option>Kansas</option><option>Kentucky</option><option>Louisiana</option><option>Maine</option><option>Maryland</option><option>Massachusetts</option><option>Michigan</option><option>Minnesota</option><option>Mississippi</option><option>Missouri</option><option>Montana</option><option>Nebraska</option><option>Nevada</option><option>New Hampshire</option><option>New Jersey</option><option>New Mexico</option><option>New York</option><option>North Carolina</option><option>North Dakota</option><option>Ohio</option><option>Oklahoma</option><option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option><option>South Carolina</option><option>South Dakota</option><option>Tennessee</option><option>Texas</option><option>Utah</option><option>Vermont</option><option>Virginia</option><option>Washington</option><option>West Virginia</option><option>Wisconsin</option><option>Wyoming</option> </select></td>
                </tr>
+              <tr>
+                 <th style="text-align: right;">Current environment:</th>
+                 <td><select id="ProfileEnivironment" name="ProfileEnivironment"><option value="">Please select an option.</option><option>Urban</option><option>Suburban</option><option>Rural</option></select></td>
+               </tr>
                <tr>
                  <th style="text-align: right;">Highest educational attainment:</th>
-                 <td><select id="ProfileEducation" name="ProfileEducation"><option value="">Please select an option.</option><option>Doctoral degree</option><option>Professional degree</option><option>Master&#39;s degree</option><option>Bachelor&#39;s degree</option><option>Associate&#39;s degree</option><option>Some college</option><option>Graduated high school</option><option>Some high school</option><option>No high school-level education</option> </select></td>
+                 <td><select id="ProfileEducation" name="ProfileEducation"><option value="">Please select an option.</option><option>Master's degree or higher</option><option>Master&#39;s degree</option><option>Bachelor&#39;s degree</option><option>Associate's Degree or some college</option><option>Graduated high school</option><option>Some high school</option><option>No high school-level education</option> </select></td>
                </tr>
-               <th style="text-align: right;">Race:</th>
-               <td><select id="ProfileRace" name="ProfileRace"><option value="">Please select an option.</option><option>African American</option><option>American Indian or Native American</option><option>Asian</option><option>Hispanic or Latino/Latina</option><option>Native Hawaiian or Pacific Islander</option><option>White</option><option value="N/A"></option> </select></td>
+               <th style="text-align: right;">Race or ethnicity:</th>
+               <td><select id="ProfileRace" name="ProfileRace"><option value="">Please select an option.</option><option>African American/Black</option><option>Asian/Pacific Islander</option><option>Hispanic/Latino/a</option><option>Middle Eastern/Arab</option></option></option><option>Native American/American Indian/First Nation</option><option>South Asian/Indian</option></option><option>White/Caucasian/European</option><option value="N/A"></option> </select></td>
              </tr>
              <tr>
-               <th style="text-align: right;">Total annual household income:</th>
-               <td><select id="ProfileIncome" name="ProfileIncome"><option value="">Please select an option.</option><option>Less than $20000</option><option>Between $20000 to $40000</option><option>Between $40001 to $60000</option><option>Between $60001 to $80000</option><option>More than $80000</option><option value="N/A"></option> </select></td>
+               <th style="text-align: right;">Socioeconmic class:</th>
+               <td><select id="ProfileIncome" name="ProfileIncome"><option value="">Please select an option.</option><option>Working Class</option><option>Lower Middle Class</option><option>Middle Class</option><option>Upper Middle Class</option><option>Upper Class</option><option value="N/A"></option> </select></td>
              </tr>
            </tbody>
          </table>
+         <p><small>*If you lived in more than one state/enviornment during your childhood (roughly ages 3-15), please select the answer that corresponds to longest time you spent in a given state/environment.</small></p>
        </div>
        <div class="card-footer" style="text-align: center;">
          <button class="btn btn-dark btn-next-profile">Next</button></div>
@@ -315,7 +384,7 @@ The following changes can be made with minimal changes to the code
        </div>
        <div class="card-body centered">
          <p>You have finished the study! Your code is <b><span id="insert-code"></span></b>.<br/>Please input this code into your HIT. You may then close this window.</p>
-         <p>If you have any questions or concerns regarding this study, please do not hesitate to contact the lab at <a href="mailto:phonlab.scotus@gmail.com">phonlab.scotus@gmail.com</a>.</p>
+         <p>If you have any questions or concerns regarding this study, please do not hesitate to contact the lab at <a href="mailto:phonlab@gmail.com">phonlab@gmail.com</a>.</p>
        </div>
      </div>
    </div>
