@@ -23,7 +23,7 @@ var subjectData = []
 var sharedData = {'workerId': params.workerId, 'surveyCode': surveyCode};
 
 // Reference for saving CSV
-var dataRef = storageRef.child('3-13-2017-run1/' + params.workerId + '.csv');
+var dataRef = storageRef.child('jbp/rsp-study/10202017/' + params.workerId + '.csv');
 
 // Function below is executed at run time of the HTML
 $(document).ready(function() {
