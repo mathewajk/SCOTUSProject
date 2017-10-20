@@ -82,7 +82,7 @@ The following changes can be made with minimal changes to the code
           <div class="card-header">Recording {{num}} of {{total}}</div>
 
           <div class="card-body">
-              <p  align="center"><audio controls="controls" id="SRPAudioID{{num}}" preload="auto"><source src="https://home.uchicago.edu/~jbphillips/Stim/{{audio_name}}" type="audio/wav" /></audio></p>
+              <p  align="center"><audio controls="controls" id="SRPAudioID{{num}}" preload="auto"><source src="http://home.uchicago.edu/~jbphillips/Stim/{{audio_name}}" type="audio/wav" /></audio></p>
               <p><br/>1. Please provide your impression of the speaker in the matrix below:</p>
               <table align="center">
                   <tbody>
@@ -108,29 +108,29 @@ The following changes can be made with minimal changes to the code
                   <tbody>
                   <tr>
                       <td style="height: 25px;">
-                      <input name="checkbox1" name="region{{num}}" type="checkbox" value="South" />
+                      <input id="checkbox1_{{num}}" name="region{{num}}" type="checkbox" value="South" />
                       <td style="width: 130px; height: 25px;">The South</td>
                       <td style="height: 25px;">
-                      <input name="checkbox2" name="region{{num}}" type="checkbox" value="North" />
+                      <input id="checkbox2_{{num}}" name="region{{num}}" type="checkbox" value="North" />
                       <td style="width: 130px; height: 25px;">The North</td>
                       <td style="height: 25px;">
-                      <input name="checkbox3" name="region{{num}}" type="checkbox" value="Midwest" />
+                      <input id="checkbox3_{{num}}" name="region{{num}}" type="checkbox" value="Midwest" />
                       <td style="width: 130px; height: 25px;">The Midwest</td>
                   </tr>
                   <tr>
                       <td style="height: 25px;">
-                      <input name="checkbox4" name="region{{num}}" type="checkbox" value="Southwest" />
+                      <input id="checkbox4_{{num}}" name="region{{num}}" type="checkbox" value="Southwest" />
                       <td style="width: 130px; height: 25px;">The Southwest</td>
                       <td style="height: 25px;">
-                      <input name="checkbox5" name="region{{num}}" type="checkbox" value="West" />
+                      <input id="checkbox5_{{num}}" name="region{{num}}" type="checkbox" value="West" />
                       <td style="width: 150px; height: 25px;">The West Coast</td>
                       <td style="height: 25px;">
-                      <input name="checkbox6" name="region{{num}}" type="checkbox" value="East" />
+                      <input id="checkbox6_{{num}}" name="region{{num}}" type="checkbox" value="East" />
                       <td style="width: 150px; height: 25px;">The East Coast</td>
                   </tr>
                   <tr>
                       <td style="height: 25px;">
-                      <input name="checkbox7" name="region{{num}}" type="checkbox" value="Anywhere" />
+                      <input id="checkbox7_{{num}}" name="region{{num}}" type="checkbox" value="Anywhere" />
                       <td style="width: 130px; height: 25px;">Anywhere</td>
                   </tr>
                   <tr>
@@ -138,13 +138,13 @@ The following changes can be made with minimal changes to the code
                   </tr>
                   <tr>
                       <td style="height: 25px;">
-                      <input name="checkbox8" name="region{{num}}" type="checkbox" value="Urban" />
+                      <input id="checkbox8_{{num}}" name="region{{num}}" type="checkbox" value="Urban" />
                       <td style="width: 130px; height: 25px;">The City</td>
                       <td style="height: 25px;">
-                      <input name="checkbox9" name="region{{num}}" type="checkbox" value="Rural" />
+                      <input id="checkbox9_{{num}}" name="region{{num}}" type="checkbox" value="Rural" />
                       <td style="width: 130px; height: 25px;">The Country</td>
                       <td style="height: 25px;">
-                      <input name="checkbox10" name="region{{num}}" type="checkbox" value="Suburban" />
+                      <input id="checkbox10_{{num}}" name="region{{num}}" type="checkbox" value="Suburban" />
                       <td style="width: 130px; height: 25px;">The Suburbs</td>
                   </tr>
                   <tr>
@@ -379,7 +379,7 @@ The following changes can be made with minimal changes to the code
          <div class="card-body">
            <ul>
              <li>In the following task, you will listen to a series of audio recordings from different talkers. Please follow the instructions and provide your impression of the talkers.</li>
-             <li>There are altogether 20 recordings. Please expect to spend roughly 8 minutes for all of them (approx. 20 seconds per question).</li>
+             <li>There are altogether 48 recordings. Please expect to spend roughly 20 minutes for all of them (approx. 20 seconds per question).</li>
              <li>For each question, the associated audio clip will be automatically played once when the question appears, and you may play it as many times as you like.</li>
              <li>Please respond as quickly as possible. Please do your best to report your first impression and do not dwell on a particular file for too long.</li>
              <li>Click on &quot;Next&quot; to begin the task.</li>

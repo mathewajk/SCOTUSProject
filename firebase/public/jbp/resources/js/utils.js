@@ -74,7 +74,7 @@ function objArrayToCSV(args) {
 
 // Check whether or not a worker has completed the experiment
 function checkWorker(workerId) {
-    return firebase.database().ref('workers/' + workerId).once('value').then(function(snapshot) {
+    return firebase.database().ref('rsp-workers/' + workerId).once('value').then(function(snapshot) {
         if(!snapshot.val()) {
             console.log("Worker not found.");
             return false;
@@ -103,7 +103,7 @@ function s4() {
 
 // Add a worker to the database with the specified completion value
 function addWorker(workerId, value) {
-    var tokenRef = database.ref('workers/' + workerId);
+    var tokenRef = database.ref('rsp-workers/' + workerId);
     tokenRef.set({
         complete : value
     });
@@ -186,8 +186,8 @@ function generateQuestions(qualities, polarities) {
     var source = $("#generate-html").html();
     var template = Handlebars.compile(source);
 
-    var coin = floor(Math.random() * 2) + 1;
-    var die = floor(Math.random() * 3) + 1;
+    var coin = Math.floor(Math.random() * 2) + 1;
+    var die = Math.floor(Math.random() * 3) + 1;
 
     var s_cond = '';
     var word = '';
@@ -207,12 +207,13 @@ function generateQuestions(qualities, polarities) {
       case 3:
         word = '_spritz';
         break;
-
-    for(i = 1; i <= 8; i++) {
-      audioNames.append('00' + i + word + s_cond);
     }
 
-    shuffle(audioNames);
+    for(i = 1; i <= 8; i++) {
+      audioNames.push('00' + i + word + s_cond + '.wav');
+    }
+
+    knuthShuffle(audioNames);
 
     for (var i=1;i<(audioNames.length + 1);i++) {
         var inputs = [];
@@ -239,7 +240,7 @@ function generateQuestions(qualities, polarities) {
         }
 
         // Create and append the HTML
-        context = {num: String(i), total: String(RatingPerHIT), audio_name: audioNames[i-1], rating: inputs};
+        context = {num: String(i), total: String(audioNames.length), audio_name: audioNames[i-1], rating: inputs};
         $('#last_carousel').before(template(context));
     }
 }

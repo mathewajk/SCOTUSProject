@@ -7,8 +7,8 @@
 // Firebase params
 var config = {
     apiKey: "AIzaSyAZLQJ2Ht53jjPvQjV1RD6FmSeS64c45bs",
-    databaseURL: "https://SRP-project.firebaseio.com/",
-    storageBucket: "gs://SRP-project.appspot.com"
+    databaseURL: "https://scotus-project.firebaseio.com/",
+    storageBucket: "gs://scotus-project.appspot.com"
 };
 firebase.initializeApp(config);
 
