@@ -190,7 +190,7 @@ function generateQuestions(qualities, polarities) {
     var die = floor(Math.random() * 3) + 1;
 
     var s_cond = '';
-    var stop_cond = '';
+    var word = '';
 
     if (coin === 1)
       s_cond = '_s';
@@ -199,17 +199,17 @@ function generateQuestions(qualities, polarities) {
 
     switch(die) {
       case 1:
-        stop_cond = '_p';
+        word = '_script';
         break;
       case 2:
-        stop_cond = '_t';
+        word = '_string';
         break;
       case 3:
-        stop_cond = '_k';
+        word = '_spritz';
         break;
 
     for(i = 1; i <= 8; i++) {
-      audioNames.append('00' + i + stop_cond + s_cond);
+      audioNames.append('00' + i + word + s_cond);
     }
 
     shuffle(audioNames);
