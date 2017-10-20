@@ -82,7 +82,7 @@ The following changes can be made with minimal changes to the code
           <div class="card-header">Recording {{num}} of {{total}}</div>
 
           <div class="card-body">
-              <p  align="center"><audio controls="controls" id="SRPAudioID{{num}}" preload="auto"><source src="http://128.100.177.31/public/{{audio_name}}" type="audio/wav" /></audio></p>
+              <p  align="center"><audio controls="controls" id="SRPAudioID{{num}}" preload="auto"><source src="https://home.uchicago.edu/~jbphillips/Stim/{{audio_name}}" type="audio/wav" /></audio></p>
               <p><br/>1. Please provide your impression of the speaker in the matrix below:</p>
               <table align="center">
                   <tbody>
@@ -108,29 +108,29 @@ The following changes can be made with minimal changes to the code
                   <tbody>
                   <tr>
                       <td style="height: 25px;">
-                      <input name="checkbox1" type="checkbox" value="South" />
+                      <input name="checkbox1" name="region{{num}}" type="checkbox" value="South" />
                       <td style="width: 130px; height: 25px;">The South</td>
                       <td style="height: 25px;">
-                      <input name="checkbox2" type="checkbox" value="North" />
+                      <input name="checkbox2" name="region{{num}}" type="checkbox" value="North" />
                       <td style="width: 130px; height: 25px;">The North</td>
                       <td style="height: 25px;">
-                      <input name="checkbox3" type="checkbox" value="Midwest" />
+                      <input name="checkbox3" name="region{{num}}" type="checkbox" value="Midwest" />
                       <td style="width: 130px; height: 25px;">The Midwest</td>
                   </tr>
                   <tr>
                       <td style="height: 25px;">
-                      <input name="checkbox4" type="checkbox" value="Southwest" />
+                      <input name="checkbox4" name="region{{num}}" type="checkbox" value="Southwest" />
                       <td style="width: 130px; height: 25px;">The Southwest</td>
                       <td style="height: 25px;">
-                      <input name="checkbox5" type="checkbox" value="West" />
+                      <input name="checkbox5" name="region{{num}}" type="checkbox" value="West" />
                       <td style="width: 150px; height: 25px;">The West Coast</td>
                       <td style="height: 25px;">
-                      <input name="checkbox6" type="checkbox" value="East" />
+                      <input name="checkbox6" name="region{{num}}" type="checkbox" value="East" />
                       <td style="width: 150px; height: 25px;">The East Coast</td>
                   </tr>
                   <tr>
                       <td style="height: 25px;">
-                      <input name="checkbox7" type="checkbox" value="Anywhere" />
+                      <input name="checkbox7" name="region{{num}}" type="checkbox" value="Anywhere" />
                       <td style="width: 130px; height: 25px;">Anywhere</td>
                   </tr>
                   <tr>
@@ -138,13 +138,13 @@ The following changes can be made with minimal changes to the code
                   </tr>
                   <tr>
                       <td style="height: 25px;">
-                      <input name="checkbox8" type="checkbox" value="Urban" />
+                      <input name="checkbox8" name="region{{num}}" type="checkbox" value="Urban" />
                       <td style="width: 130px; height: 25px;">The City</td>
                       <td style="height: 25px;">
-                      <input name="checkbox9" type="checkbox" value="Rural" />
+                      <input name="checkbox9" name="region{{num}}" type="checkbox" value="Rural" />
                       <td style="width: 130px; height: 25px;">The Country</td>
                       <td style="height: 25px;">
-                      <input name="checkbox10" type="checkbox" value="Suburban" />
+                      <input name="checkbox10" name="region{{num}}" type="checkbox" value="Suburban" />
                       <td style="width: 130px; height: 25px;">The Suburbs</td>
                   </tr>
                   <tr>
@@ -152,13 +152,13 @@ The following changes can be made with minimal changes to the code
                   </tr>
                   <tr>
                       <td style="height: 25px;">
-                      <input name="checkbox11" type="checkbox" value="Rich" />
+                      <input name="checkbox11" name="region{{num}}" type="checkbox" value="Rich" />
                       <td style="width: 130px; height: 25px;">A Wealthy Background</td>
                       <td style="height: 25px;">
-                      <input name="checkbox12" type="checkbox" value="Middleclass" />
+                      <input name="checkbox12" name="region{{num}}" type="checkbox" value="Middleclass" />
                       <td style="width: 130px; height: 25px;">A Middle-Class Background</td>
                       <td style="height: 25px;">
-                      <input name="checkbox13" type="checkbox" value="Working" />
+                      <input name="checkbox13" name="region{{num}}" type="checkbox" value="Working" />
                       <td style="width: 130px; height: 25px;">A Working-Class Background</td>
                   </tr>
                   </tbody>

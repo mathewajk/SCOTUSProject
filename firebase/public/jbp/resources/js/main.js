@@ -133,6 +133,10 @@ $(document).ready(function() {
                 trialData[label] = $('input[name=' + radio_name + ']:checked').val();
         });
 
+        if($('input[name=region' + currentQuestion + ']:checked').length < 1) {
+          validf = false;
+        }
+
         if(validf){ // If all questions have been answered
             subjectData.push(trialData);
             if(currentQuestion % 10 == 0 || currentQuestion == 1) { // Save data every 1/2 of the way

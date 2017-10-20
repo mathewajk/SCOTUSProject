@@ -173,7 +173,7 @@ function getAllUrlParams(url) {
   return obj;
 }
 
-function generateQuestions(qualities, polarities, params) {
+function generateQuestions(qualities, polarities) {
     var ordered_qualities = window.knuthShuffle(qualities.slice(0));
 
     // Randomize polarity
@@ -185,7 +185,36 @@ function generateQuestions(qualities, polarities, params) {
     var context, temp;
     var source = $("#generate-html").html();
     var template = Handlebars.compile(source);
-    for (var i=1;i<(RatingPerHIT + 1);i++) {
+
+    var coin = floor(Math.random() * 2) + 1;
+    var die = floor(Math.random() * 3) + 1;
+
+    var s_cond = '';
+    var stop_cond = '';
+
+    if (coin === 1)
+      s_cond = '_s';
+    else (coin === 2)
+      s_cond = '_sh';
+
+    switch(die) {
+      case 1:
+        stop_cond = '_p';
+        break;
+      case 2:
+        stop_cond = '_t';
+        break;
+      case 3:
+        stop_cond = '_k';
+        break;
+
+    for(i = 1; i <= 8; i++) {
+      audioNames.append('00' + i + stop_cond + s_cond);
+    }
+
+    shuffle(audioNames);
+
+    for (var i=1;i<(audioNames.length + 1);i++) {
         var inputs = [];
 
         for (var j=0;j<7;j++){ // Upper bound of the loop should match number of qualities
@@ -210,7 +239,7 @@ function generateQuestions(qualities, polarities, params) {
         }
 
         // Create and append the HTML
-        context = {num: String(i), total: String(RatingPerHIT), audio_name: audioNames[parseInt(params['a' + i], 10)], rating: inputs};
+        context = {num: String(i), total: String(RatingPerHIT), audio_name: audioNames[i-1], rating: inputs};
         $('#last_carousel').before(template(context));
     }
 }
