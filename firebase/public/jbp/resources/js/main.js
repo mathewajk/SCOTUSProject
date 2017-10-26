@@ -136,18 +136,26 @@ $(document).ready(function() {
         if($('input[name=region' + currentQuestion + ']:checked').length < 1) {
           validf = false;
         }
+        else {
+          _.each($('input[name=region' + currentQuestion + ']'), function(checkbox, num) {
+            trialData[$(checkbox).val()] = 0;
+          });
+          _.each($('input[name=region' + currentQuestion + ']:checked'), function(checkbox, num) {
+            trialData[$(checkbox).val()] = 1;
+          });
+        }
 
         if(validf){ // If all questions have been answered
             subjectData.push(trialData);
-            if(currentQuestion % 10 == 0 || currentQuestion == 1) { // Save data every 1/2 of the way
+            if(currentQuestion % 8 === 0 || currentQuestion == 1) { // Save data every 8 questions
                 saveData(objArrayToCSV({data: subjectData}), dataRef);
-                if(currentQuestion == 20) { // If they're done, add them to the database
+                if(currentQuestion === 24) { // If they're done, add them to the database
                     addWorker(params.workerId, 1);
                 }
             }
 
             $('#tweets-carousel').carousel('next'); // Goto next question
-            if(buttonName != String(RatingPerHIT)){
+            if(buttonName !== String(audioNames.length)){
                 document.getElementById("SRPAudioID" + nextQuestion).autoplay = true;
                 document.getElementById("SRPAudioID" + nextQuestion).load();
             }
