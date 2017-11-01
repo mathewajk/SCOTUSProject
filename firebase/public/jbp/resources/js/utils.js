@@ -192,10 +192,13 @@ function generateQuestions(qualities, polarities) {
     var s_cond = '';
     var word = '';
 
-    if (coin === 1)
+    if (coin == 1)
       s_cond = '_s';
-    else (coin === 2)
+    else
       s_cond = '_sh';
+
+    console.log(coin);
+    console.log(s_cond);
 
     switch(die) {
       case 1:
