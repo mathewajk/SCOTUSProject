@@ -22,8 +22,10 @@ var surveyCode = guid();
 var subjectData = []
 var sharedData = {'workerId': params.workerId, 'surveyCode': surveyCode};
 
+var d = new Date();
+
 // Reference for saving CSV
-var dataRef = storageRef.child('jbp/rsp-study/10202017/' + params.workerId + '.csv');
+var dataRef = storageRef.child('sample/sample-study/' + d.getDate() + d.getMonth() + d.getYear() + '/' + params.workerId + '.csv');
 
 // Function below is executed at run time of the HTML
 $(document).ready(function() {
@@ -147,9 +149,9 @@ $(document).ready(function() {
 
         if(validf){ // If all questions have been answered
             subjectData.push(trialData);
-            if(currentQuestion % 8 === 0 || currentQuestion == 1) { // Save data every 8 questions
+            if(currentQuestion % 8 == 0 || currentQuestion == 1) { // Save data every 8 questions
                 saveData(objArrayToCSV({data: subjectData}), dataRef);
-                if(currentQuestion === 24) { // If they're done, add them to the database
+                if(currentQuestion == audioNames.length) { // If they're done, add them to the database
                     addWorker(params.workerId, 1);
                 }
             }
