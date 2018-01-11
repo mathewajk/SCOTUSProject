@@ -186,36 +186,6 @@ function generateQuestions(qualities, polarities) {
     var source = $("#generate-html").html();
     var template = Handlebars.compile(source);
 
-    var coin = Math.floor(Math.random() * 2) + 1;
-    var die = Math.floor(Math.random() * 3) + 1;
-
-    var s_cond = '';
-    var word = '';
-
-    if (coin == 1)
-      s_cond = '_s';
-    else
-      s_cond = '_sh';
-
-    console.log(coin);
-    console.log(s_cond);
-
-    switch(die) {
-      case 1:
-        word = '_script';
-        break;
-      case 2:
-        word = '_string';
-        break;
-      case 3:
-        word = '_spritz';
-        break;
-    }
-
-    for(i = 1; i <= 8; i++) {
-      audioNames.push('00' + i + word + s_cond + '.wav');
-    }
-
     knuthShuffle(audioNames);
 
     for (var i=1;i<(audioNames.length + 1);i++) {
