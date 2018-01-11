@@ -125,12 +125,12 @@ $(document).ready(function() {
         trialData['audioName'] = $('#SRPAudio' + currentQuestion).html();
 
         var validf = true;
-        _.each(qualityLabels, function(label) {
-            var radio_name = label + buttonName;
+        _.each(qualities, function(quality) {
+            var radio_name = quality[0] + buttonName;
             if(!$('input[name=' + radio_name + ']').is(':checked'))
                 validf=false;
             else
-                trialData[label] = $('input[name=' + radio_name + ']:checked').val();
+                trialData[quality[0]] = $('input[name=' + radio_name + ']:checked').val();
         });
 
         if($('input[name=region' + currentQuestion + ']:checked').length < 1) {
