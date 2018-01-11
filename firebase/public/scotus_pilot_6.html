@@ -1,13 +1,13 @@
 <!doctype html>
-<meta charset="UTF-8"> 
+<meta charset="UTF-8">
 
-<!-- 
+<!--
 Scotus Mturk Experiment Code
 -Dennis Luo updated 19/12/2015
 
 General Experiment Setup process
 
-- Create an project in Mturk, using the code below
+- Create a project in Mturk, using the code below
 - Click Publish and download a sample input csv
 - Fill up the csv with audio clips names
 - Upload the input csv
@@ -16,7 +16,7 @@ General Experiment Setup process
 The following changes can be made with minimal changes to the code
 
 1) change data source
-    On line 56, change the source src = "" to the directory used to store the audio clips. 
+    On line 56, change the source src = "" to the directory used to store the audio clips.
 
 2) change attribute\qualities
     Change qualities on line 116 add or subtract based on the same format
@@ -43,7 +43,7 @@ The following changes can be made with minimal changes to the code
 
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script><script src="https://cdn.rawgit.com/coolaj86/knuth-shuffle/master/index.js"></script>
         <script src="static/js/lib/underscore-min.js"></script>
-        
+
         <script src="static/js/data.js"></script>
         <script src="static/js/audio.js"></script>
         <script src="static/js/utils.js"></script>
@@ -53,18 +53,18 @@ The following changes can be made with minimal changes to the code
             .centered {
                 text-align: center;
             }
-            
+
             .hidden {
                 display: none;
             }
-            
+
             table {
                 font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
                 font-size: 14px;
                 line-height: 1.428571429;
                 color: #333333;
             }
-	    
+
         </style>
 	<style>
 	    li span { position: relative; left: 0px; }
@@ -119,20 +119,20 @@ The following changes can be made with minimal changes to the code
     </head>
     <body>
 
-        <div id="error" class="centered" style="display:none">     
-    	
+        <div id="error" class="centered" style="display:none">
+
 	<img class="logo" src="https://communications.uchicago.edu/sites/all/files/identity/logo/jpg/UC-Shield-fall-2012.jpg" alt="UChicago Logo" width="100"/>
-            
+
                 <h4 class="header">Phonology Laboratory, Department of Linguistics, The University of Chicago</h4>
-	
+
 	<p>It appears that you have previously completed a study from the Phonology Lab that used the same data as, or similar data to, the study you are attempting to complete now. Unfortunately, we cannot allow the same person to participate in an experiment more than once. We apologize for the inconvenience, but we must ask that you return your HIT now. (This will not negatively impact your ability to participate in future experiments.)</p><p>If you believe that this message is in error, you can contact the lab at <a href="mailto:phonlab.scotus@gmail.com">phonlab.scotus@gmail.com</a>, and we will do our best to resolve the situation.</p>
         </div>
 
 
         <div id="no-consent" class="centered" style="display:none">
-            
+
 	    <img class="logo" src="https://communications.uchicago.edu/sites/all/files/identity/logo/jpg/UC-Shield-fall-2012.jpg" alt="UChicago Logo" width="100"/>
-            
+
                 <h4 class="header">Phonology Laboratory, Department of Linguistics, The University of Chicago</h4>
 	    <div class="panel panel-body centered">
                 Thanks for your interest! We're sorry this study wasn't for you. You may close this window and return the HIT.
@@ -143,9 +143,9 @@ The following changes can be made with minimal changes to the code
             <div class="panel panel-body centered">
 
 		<img class="logo" src="https://communications.uchicago.edu/sites/all/files/identity/logo/jpg/UC-Shield-fall-2012.jpg" alt="UChicago Logo" width="100"/>
-            
-                <h4 class="header">Phonology Laboratory, Department of Linguistics, The University of Chicago</h4>   
-               
+
+                <h4 class="header">Phonology Laboratory, Department of Linguistics, The University of Chicago</h4>
+
 		 Thank you for your interest in our study! <br/><br/> As a reminder, this study runs best in <b>Chrome</b> or <b>Firefox</b>. If you are not using one of these browsers, we recommend switching now to avoid future issues. When you are ready, please proceed via the button below.
                 <br/><br/>
                 <button type="button" class="btn btn-success browser">
@@ -158,15 +158,15 @@ The following changes can be made with minimal changes to the code
 	    <div style="margin: 20px auto; width: 920px;">
                 <div style="margin: 20px auto; width: 920px;">
 		    <div class="panel panel-body">
-	            <div class="panel panel-default">		    
+	            <div class="panel panel-default">
                         <div class="panel-heading">
                             <h1 class="panel-title" style="text-align: center"><b>Study Information and Participant Consent</b></h1>
-                        </div> 
+                        </div>
 			<br/>
             		<ol type="I", start="1">
 			<li style="margin-bottom: 10px;"><span><b>Introduction:</b> The Department of Linguistics at the University of Chicago is carrying out a research study on speech habits of English speakers. The researcher is Dr. Alan Yu (Professor of Linguistics). You are invited to take part in this research study. Before you decide to be a part of this study, you need to understand the risks and benefits. This consent form provides information about the research study. This process is known as informed consent. Your decision to take part in the study is voluntary. You are free to choose whether to take part in the study.</span></li>
 
-                        <li style="margin-bottom: 10px;"><span><b>Participant involvement:</b> The study is conducted over the online platform Amazon Mechanical Turk in a 20-minute session. Within the session, you will be asked to participate in a series of speech and language processing tasks and to fill out a set of questionnaires. You can terminate the experiment at any time. Withdrawing from the study will not result in any negative consequences for you.</span></li>	
+                        <li style="margin-bottom: 10px;"><span><b>Participant involvement:</b> The study is conducted over the online platform Amazon Mechanical Turk in a 20-minute session. Within the session, you will be asked to participate in a series of speech and language processing tasks and to fill out a set of questionnaires. You can terminate the experiment at any time. Withdrawing from the study will not result in any negative consequences for you.</span></li>
 
 			<li style="margin-bottom: 10px;"><span><b>Risks:</b> Your participation poses minimal risks to you. Your answers will be kept confidential and your responses will not be linked to you personally; they will be reported as a group.</span></li>
 
@@ -175,15 +175,15 @@ The following changes can be made with minimal changes to the code
 			<li style="margin-bottom: 10px;"><span><b>Confidentiality:</b> The information in the study records will be kept confidential. Data will be stored securely and will be made available only to persons conducting the study unless participants specifically give permission in writing to do otherwise. No reference will be made in oral or written reports which could link participants to the study.</span></li>
 
 			<li style="margin-bottom: 10px;"><span><b>Compensation:</b> You will receive $1.00 for your participation in this study.</span></li>
-			
+
 			<li style="margin-bottom: 10px;"><span><b>Contact information:</b> If you have questions at any time about the study, the procedures, or your rights as a participant, you may contact the researcher at 1115 E. 58th Street, Chicago, IL 60637 or contact the lab team at <a href="mailto:phonlab.scotus@gmail.com">phonlab.scotus@gmail.com</a>. If you have questions regarding your rights as a participant, you may contact the Institutional Review Board at 773-834-7835 or sbsirbwise@listhost.uchicago.edu.</span></li>
 
 			<li style="margin-bottom: 10px;"><span><b>Participation:</b> Your participation in this study is voluntary; you may decline to participate without penalty. If you decide to participate, you may withdraw from the study at any time without penalty and without loss of benefits to which you are otherwise entitled. If you withdraw from the study before data collection is completed your data will be returned to you or destroyed.</span></li>
 
 			</ol>
-			<div class="panel panel-body centered">	
+			<div class="panel panel-body centered">
 			    <p><b>By participating in this experiment, I confirm that I am fluent in English and at least 18 years old, and I understand the purpose of the research, the study procedures that I will undergo, and the possible risks and discomforts as well as benefits that I may experience. I have read and I understand these terms of consent. Therefore, I agree to give my consent to participate as a subject in this research project.</b></p>
-				      
+
                             <br/>
                                 <button type="button" class="btn btn-success consent">
                                     <span class="glyphicon glyphicon-ok"></span>
@@ -204,11 +204,11 @@ The following changes can be made with minimal changes to the code
                         <button type="button" class="btn btn-default btn-sm" onClick="window.print();">
                         <span class="glyphicon glyphicon-print"></span>Print a copy of this</button>
                     </div>
-                    
-		        
-                        
-		   
-                </div>      
+
+
+
+
+                </div>
             </div>
         </div>
 

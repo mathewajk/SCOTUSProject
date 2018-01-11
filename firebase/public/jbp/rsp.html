@@ -1,35 +1,6 @@
 <!doctype html>
 <meta charset="UTF-8">
 
-<!--
-SRP Mturk Experiment Code
--Dennis Luo updated 19/12/2015
-
-General Experiment Setup process
-
-- Create an project in Mturk, using the code below
-- Click Publish and download a sample input csv
-- Fill up the csv with audio clips names
-- Upload the input csv
-- Publish the HIT
-
-The following changes can be made with minimal changes to the code
-
-1) change data source
-    On line 56, change the source src = "" to the directory used to store the audio clips.
-
-2) change attribute\qualities
-    Change qualities on line 116 add or subtract based on the same format
-    Change Polarities on line 121 add or subtract based on the same format
-    Change number on line 131 to the number of qualities
-    Add Validation with the same type of code on line 258
-
-3) change number of ratings per HIT
-    On line 98, change ratingPerHIT variable to the desired number
-    Make changes to the "audio" divisions at the end of this HTML (Ensure the numbers match the number of ratingsPerHIT)
-
--->
-
 <html>
     <head>
         <link href="../shared/vendor/bootstrap-4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" />
