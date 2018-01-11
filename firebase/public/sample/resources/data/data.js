@@ -10,7 +10,5 @@ var qualities = [["Attractive", "Attractive", "Unattractive"],
                  ["Homosexual", "Homosexual", "Heterosexual"],
                  ["Friendly", "Friendly", "Unfriendly"]
                 ];
-                
-var polarities = [1,1,1,1,0,0,0];
 
-var RatingPerHIT = 20;
+var polarities = [1,1,1,1,0,0,0];
